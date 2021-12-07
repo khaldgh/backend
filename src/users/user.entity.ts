@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Place } from 'src/places/place.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity()
 export class User {
@@ -11,5 +12,11 @@ export class User {
 
     @Column()
     password: string;
+
+    @Column({ default: true })
+    admin: boolean;
+
+    @OneToMany(() => Place, (place) => place.user)
+    places: Place[];
 
 }

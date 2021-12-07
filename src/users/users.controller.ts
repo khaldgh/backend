@@ -14,13 +14,13 @@ import { parse } from 'path/posix';
 import { UserDto } from './dtos/user.dto';
 import { UsersService } from './users.service';
 import { User } from './user.entity';
-import { serialize } from 'src/interceptors/serialize.interceptor';
+import { Serialize } from '../interceptors/serialize.interceptor';
 import { AuthService } from './auth.service';
 import { currentUser } from './decorators/current-user.decorator';
-import { AuthGuard } from 'src/guards/auth.guard';
+import { AuthGuard } from '../guards/auth.guard';
 
 @Controller('users')
-@serialize(UserDto)
+@Serialize(UserDto)
 export class UsersController {
   constructor(
     private usersService: UsersService,
