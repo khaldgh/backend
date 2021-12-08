@@ -1,6 +1,6 @@
-app.module.ts
+app.module
 
-ormconfig.json
+ormconfig
 
 .env.development
 .env.test
