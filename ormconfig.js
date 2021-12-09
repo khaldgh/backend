@@ -28,6 +28,15 @@ switch (process.env.NODE_ENV) {
         });
         break;
         case 'production':
+            Object.assign(dbConfig, {
+                type: 'mysql',
+                url: process.env.DATABASE_URL,
+                migrationsRun: true,
+                entities: ['**.*.js'],
+                ssl: {
+                    rejectUnauthorized: false
+                }
+            })
             break;
         default:
             throw new Error('unknown environment');
