@@ -30,7 +30,7 @@ switch (process.env.NODE_ENV) {
         case 'production':
             Object.assign(dbConfig, {
                 type: 'mysql',
-                url: process.env.DATABASE_URL,
+                url: process.env.CLEARDB_DATABASE_URL,
                 migrationsRun: true,
                 entities: ['**.*.js'],
                 ssl: {
