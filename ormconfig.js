@@ -31,6 +31,7 @@ switch (process.env.NODE_ENV) {
             Object.assign(dbConfig, {
                 type: 'mysql',
                 url: process.env.CLEARDB_DATABASE_URL,
+                port: 3306,
                 migrationsRun: true,
                 entities: ['**.*.js'],
                 ssl: {
@@ -41,5 +42,4 @@ switch (process.env.NODE_ENV) {
         default:
             throw new Error('unknown environment');
 }
-
 module.exports = dbConfig;
