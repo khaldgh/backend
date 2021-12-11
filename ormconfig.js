@@ -30,7 +30,12 @@ switch (process.env.NODE_ENV) {
         case 'production':
             Object.assign(dbConfig, {
                 type: 'mysql',
-                url: process.env.CLEARDB_DATABASE_URL,
+                // url: process.env.CLEARDB_DATABASE_URL,
+                database: 'heroku_11b09383cddc9ee',
+                password: 'de0a0693',
+                host: 'us-cdbr-east-04.cleardb.com',
+                username: 'b68cf19135f010',
+                port: 3306,
                 migrationsRun: true,
                 entities: ['**.*.js'],
                 ssl: {
