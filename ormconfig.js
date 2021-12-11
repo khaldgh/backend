@@ -29,8 +29,8 @@ switch (process.env.NODE_ENV) {
         break;
         case 'production':
             Object.assign(dbConfig, {
-                type: 'mysql',
-                url: 'mysql://b68cf19135f010:de0a0693@us-cdbr-east-04.cleardb.com/heroku_11b09383cddc9ee?reconnect=true',
+                type: 'postgres',
+                url: process.env.DATABASE_URL,
                 migrationsRun: true,
                 entities: ['**.*.js'],
                 ssl: {
