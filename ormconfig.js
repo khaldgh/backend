@@ -37,7 +37,7 @@ switch (process.env.NODE_ENV) {
                 username: 'b68cf19135f010',
                 port: 3306,
                 migrationsRun: true,
-                entities: ['**.*.js'],
+                entities: ['**.entity.js'],
                 ssl: {
                     rejectUnauthorized: false
                 }
