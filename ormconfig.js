@@ -1,10 +1,10 @@
-var dbConfig = { 
+var dbConfig = {
     synchronize: false,
     migrations: ['migrations/*.js'],
     cli: {
-        migrationsDir: 'migrations'
-    }
-};
+      migrationsDir: 'migrations',
+    },
+  };
 
 switch (process.env.NODE_ENV) {
     case 'development': 
@@ -31,6 +31,7 @@ switch (process.env.NODE_ENV) {
             Object.assign(dbConfig, {
                 type: 'mysql',
                 url: process.env.CLEARDB_DATABASE_URL,
+                database: 'clear-db',
                 migrationsRun: true,
                 entities: ['**.*.js'],
                 ssl: {
