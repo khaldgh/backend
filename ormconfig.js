@@ -29,8 +29,8 @@ switch (process.env.NODE_ENV) {
         break;
         case 'production':
             Object.assign(dbConfig, {
-                type: 'postgres',
-                url: process.env.DATABASE_URL,
+                type: 'mysql',
+                url: process.env.CLEARDB_DATABASE_URL,
                 migrationsRun: true,
                 entities: ['**.*.js'],
                 ssl: {
