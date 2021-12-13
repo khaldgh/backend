@@ -7,18 +7,18 @@ var dbConfig = {
   };
 
 switch (process.env.NODE_ENV) {
-    case 'development': 
-    Object.assign(dbConfig, {
-        type: 'mysql',
-        database: 'new_schema',
-        entities: ['**/*.entity.js'],
-        username: 'root',
-        password: 'Password',
-        host: 'localhost',
-        port: 3306
+    // case 'development': 
+    // Object.assign(dbConfig, {
+    //     type: 'mysql',
+    //     database: 'new_schema',
+    //     entities: ['**/*.entity.js'],
+    //     username: 'root',
+    //     password: 'Password',
+    //     host: 'localhost',
+    //     port: 3306
         
-    });
-    break;
+    // });
+    // break;
     case 'test':
         Object.assign(dbConfig, {
             type: 'mysql',
