@@ -17,7 +17,7 @@ import { Serialize } from '../interceptors/serialize.interceptor';
 import { PlaceDto } from './dtos/place.dto';
 import { ApprovePlaceDto } from './dtos/approve-place.dto';
 import { AdminGuard } from 'src/guards/admin.guard';
-import { GetEstimateDto } from './dtos/get-estimate.dto';
+import { GetPlaceDto } from './dtos/get-place.dto';
 
 @Controller('places')
 export class PlacesController {
@@ -37,7 +37,7 @@ export class PlacesController {
   }
 
   @Get()
-  getEstimate(@Query() query: GetEstimateDto) {
+  getEstimate(@Query() query: GetPlaceDto) {
       return this.placesService.createQuery(query);
   }
 }

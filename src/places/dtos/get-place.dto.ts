@@ -1,9 +1,13 @@
-import { IsBoolean, IsDate, IsLatitude, IsLongitude, IsString, Max, max, Min, min } from "class-validator";
+import { Transform } from 'class-transformer';
+import {
+  IsString,
+  IsDate,
+  IsBoolean,
+} from 'class-validator';
 
+export class GetPlaceDto {
 
-export class CreatePlaceDto{
-
-    @IsString()
+  @IsString()
     title: string;
 
     @IsDate()
@@ -24,5 +28,4 @@ export class CreatePlaceDto{
 
     @IsBoolean()
     approved: boolean;
-
 }

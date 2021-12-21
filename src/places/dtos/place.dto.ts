@@ -4,15 +4,17 @@ export class PlaceDto {
   @Expose()
   id: number;
   @Expose()
-  model: string;
+  title: string;
   @Expose()
-  make: string;
+  time: string;
   @Expose()
-  year: number;
+  category: number;
   @Expose()
-  milage: number;
+  image: number;
   @Expose()
-  price: number;
+  description: number;
+  @Expose()
+  isFavorite: boolean;
   @Expose()
   approved: boolean;
 

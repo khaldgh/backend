@@ -8,25 +8,22 @@ export class Place {
     id: number;
 
     @Column()
-    price: number;
+    title: string;
 
     @Column()
-    make: string;
+    time: Date;
 
     @Column()
-    model: string;
+    category: string;
 
     @Column()
-    year: number;
+    image: string;
 
     @Column()
-    lat: number;
+    description: string;
 
     @Column()
-    long: number;
-
-    @Column()
-    milage: number;
+    isFavorite: boolean;
 
     @Column({ default: false})
     approved: boolean;

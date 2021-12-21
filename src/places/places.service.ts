@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { Place } from './place.entity';
 import { CreatePlaceDto } from './dtos/create-place.dto';
 import { User } from 'src/users/user.entity';
-import { GetEstimateDto } from './dtos/get-estimate.dto';
+import { GetPlaceDto } from './dtos/get-place.dto';
 
 @Injectable()
 export class PlacesService {
@@ -26,17 +26,19 @@ export class PlacesService {
       return this.repo.save(place);
   }
 
-  createQuery({ year, make, model, long, lat, milage }: GetEstimateDto ){
+  createQuery({ 
+    // year, make, model, long, lat, milage
+   }: GetPlaceDto ){
       return this.repo.createQueryBuilder()
-      .select('AVG(price)', 'price')
-      .where('year - :year BETWEEN -3 AND 3',{ year })
-    //   .andWhere('make = :make', { make })
-    //   .andWhere('model = :model', { model })
-    //   .andWhere(':long BETWEEN -5 AND 5',  { long })
-    //   .andWhere(':lat BETWEEN -5 AND 5',  { lat })
-    //   .andWhere('approved IS TRUE')
+      .select('*')
+      .where('year - :year BETWEEN -3 AND 3',{  })
+      .andWhere('make = :make', {  })
+      .andWhere('model = :model', {  })
+      .andWhere(':long BETWEEN -5 AND 5',  {  })
+      .andWhere(':lat BETWEEN -5 AND 5',  { })
+      .andWhere('approved IS TRUE')
       .orderBy('ABS(milage - :milage)', 'DESC')
-      .setParameters({ milage })
+      .setParameters({  })
       .limit(3)
       .getRawOne()
   }
