@@ -28,7 +28,7 @@ export class UsersController {
   ) {}
 
   @Get('/whoami')
-  // @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   whoAmI(@currentUser() user: User) {
     return user;
   }
@@ -63,13 +63,5 @@ export class UsersController {
     session.userId = null;
   }
 
-  //   @Get('/colors/:color')
-  //   setSession(@Param('color') color: string, @Session() session: any){
-  //       session.color = color;
-  //   }
-
-  //   @Get('/colors')
-  //   getSession(@Session() session: any){
-  //       return session.color;
-  //   }
+ 
 }
