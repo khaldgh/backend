@@ -40,4 +40,9 @@ export class PlacesController {
   getEstimate(@Query() query: GetPlaceDto) {
       return this.placesService.createQuery(query);
   }
+
+  @Get('places')
+  getPlaces() {
+      return this.placesService.getPlaces();
+  }
 }

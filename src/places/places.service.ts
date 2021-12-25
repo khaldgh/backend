@@ -26,20 +26,26 @@ export class PlacesService {
       return this.repo.save(place);
   }
 
+  async getPlaces(){
+    const places = await this.repo.find();
+    return places;
+  }
+
   createQuery({ 
     // year, make, model, long, lat, milage
    }: GetPlaceDto ){
       return this.repo.createQueryBuilder()
       .select('*')
-      .where('year - :year BETWEEN -3 AND 3',{  })
-      .andWhere('make = :make', {  })
-      .andWhere('model = :model', {  })
-      .andWhere(':long BETWEEN -5 AND 5',  {  })
-      .andWhere(':lat BETWEEN -5 AND 5',  { })
-      .andWhere('approved IS TRUE')
-      .orderBy('ABS(milage - :milage)', 'DESC')
-      .setParameters({  })
-      .limit(3)
-      .getRawOne()
+      // .where('year - :year BETWEEN -3 AND 3',{  })
+      // .andWhere('make = :make', {  })
+      // .andWhere('model = :model', {  })
+      // .andWhere(':long BETWEEN -5 AND 5',  {  })
+      // .andWhere(':lat BETWEEN -5 AND 5',  { })
+      // .andWhere('approved IS TRUE')
+      // .orderBy('ABS(milage - :milage)', 'DESC')
+      // .setParameters({  })
+      // .limit(3)
+      .getRawMany()
   }
+
 }
