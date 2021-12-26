@@ -9,5 +9,13 @@ Content-Type: application/json
 }
 
 
-GET http://localhost:3000/users?kall@com
+GET http://localhost:3000/places/places
+Content-Type: application/json
+
+
+GET http://localhost:3000/users/colors/green
+Content-Type: application/json
+
+
+GET http://localhost:3000/users/colors
 Content-Type: application/json

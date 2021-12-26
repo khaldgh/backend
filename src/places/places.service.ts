@@ -26,6 +26,7 @@ export class PlacesService {
       return this.repo.save(place);
   }
 
+
   async getPlaces(){
     const places = await this.repo.find();
     return places;

@@ -8,7 +8,7 @@ import {
   Query,
   UseInterceptors,
   Session,
-  UseGuards
+  UseGuards,
 } from '@nestjs/common';
 import { parse } from 'path/posix';
 import { UserDto } from './dtos/user.dto';
@@ -40,10 +40,10 @@ export class UsersController {
 
   @Post('/signup')
   async sendUser(@Body() body: UserDto, @Session() session: any) {
-      console.log(body)
-      const user = await this.authService.signup(body.email, body.password);
+    console.log(body);
+    const user = await this.authService.signup(body.email, body.password);
     session.userId = user.id;
-    console.log(user)
+    console.log(session.userId);
     return user;
   }
 
@@ -57,11 +57,10 @@ export class UsersController {
 
   @Post('/signout')
   async signout(@Session() session: any) {
+    console.log(session.userId);
     if (!session.userId) {
       throw new NotFoundException('user not found');
     }
     session.userId = null;
   }
-
- 
 }
