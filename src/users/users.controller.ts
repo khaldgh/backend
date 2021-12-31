@@ -55,8 +55,8 @@ export class UsersController {
     console.log(session.userId);
     return user;
   }
-
   @Post('/signout')
+  @UseGuards(AuthGuard)
   async signout(@Session() session: any) {
     console.log(session.userId);
     if (!session.userId) {
