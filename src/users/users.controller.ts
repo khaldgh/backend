@@ -29,7 +29,8 @@ export class UsersController {
 
   @Get('/whoami')
   @UseGuards(AuthGuard)
-  whoAmI(@currentUser() user: User) {
+  whoAmI(@currentUser() user: User, @Session() session: any) {
+    console.log(session);
     return user;
   }
 
@@ -63,4 +64,4 @@ export class UsersController {
     }
     session.userId = null;
   }
-}
+}  

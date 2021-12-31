@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+// import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserDto } from './dtos/user.dto';
@@ -6,13 +7,16 @@ import { User } from './user.entity';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectRepository(User) private repo: Repository<User>) {}
+  constructor(
+    @InjectRepository(User) private repo: Repository<User>,
+  ) // private jwtService: JwtService
+  {}
 
-  async findOne(id: number){
-      if(!id){
-          return null;
-      }
-      return this.repo.findOne(id)
+  async findOne(id: number) {
+    if (!id) {
+      return null;
+    }
+    return this.repo.findOne(id);
   }
 
   async find(email: string) {
