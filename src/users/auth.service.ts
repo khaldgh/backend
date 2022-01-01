@@ -19,6 +19,9 @@ export class AuthService {
     if (users.length) {
       throw new BadRequestException('user already in use');
     }
+    if(parseInt(password) <= 0){
+      throw new BadRequestException('password is too short');
+    }
     // hash the password
     // generate a salt
     const salt = randomBytes(8).toString('hex');
