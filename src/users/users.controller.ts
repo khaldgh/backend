@@ -58,7 +58,7 @@ export class UsersController {
   @Post('/signout')
   @UseGuards(AuthGuard)
   async signout(@Session() session: any) {
-    console.log(session.userId);
+    // console.log(session.userId);
     if (!session.userId) {
       throw new NotFoundException('user not found');
     }
