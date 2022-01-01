@@ -19,7 +19,7 @@ export class AuthService {
     if (users.length) {
       throw new BadRequestException('user already in use');
     }
-    if(parseInt(password) <= 0){
+    if(password.length <= 0){
       throw new BadRequestException('password is too short');
     }
     // hash the password
