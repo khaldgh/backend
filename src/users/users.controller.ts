@@ -109,7 +109,7 @@ export class UsersController {
   @UseGuards(passport.AuthGuard('facebook'))
   async instagramAuth(@Req() req) {}
 
-  @Get('instagram')
+  @Get('instagram/callback')
   @UseGuards(passport.AuthGuard('facebook'))
   instagramAuthRedirect(@Req() req) {
     console.log(req.user);
@@ -121,14 +121,4 @@ export class UsersController {
       user: req.user,
     };
   }
-
-  @Get('/dc')
-   dc() {
-     return 'dc'
-   }
-
-   @Get('/dd')
-   dd() {
-     return 'dd'
-   }
 }
