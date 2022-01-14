@@ -109,7 +109,7 @@ export class UsersController {
   @UseGuards(passport.AuthGuard('instagram'))
   async instagramAuth(@Req() req) {}
 
-  @Get('instagram/callback')
+  @Get('instagram')
   @UseGuards(passport.AuthGuard('instagram'))
   instagramAuthRedirect(@Req() req) {
     console.log(req.user);
