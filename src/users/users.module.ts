@@ -6,13 +6,13 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { CurrentUserMiddleware } from './middlewares/current-user.middleware';
 import { JwtModule } from '@nestjs/jwt';
+import { GoogleStrategy } from 'src/users/strategies/google.strategy';
+import { FacebookStrategy } from 'src/users/strategies/facebook.strategy';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User]),
-  // JwtModule.register({secret: 'secret', signOptions: })
-],
+  imports: [TypeOrmModule.forFeature([User])],
   controllers: [UsersController],
-  providers: [UsersService, AuthService],
+  providers: [UsersService, AuthService, GoogleStrategy, FacebookStrategy],
 })
 export class UsersModule {
   configure(consumer: MiddlewareConsumer) {
