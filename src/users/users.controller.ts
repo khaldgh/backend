@@ -105,20 +105,20 @@ export class UsersController {
     };
   }
 
-  @Get('/instagram')
-  @UseGuards(passport.AuthGuard('facebook'))
-  async instagramAuth(@Req() req) {}
+  // @Get('/instagram')
+  // @UseGuards(passport.AuthGuard('facebook'))
+  // async instagramAuth(@Req() req) {}
 
-  @Get('instagram/callback')
-  @UseGuards(passport.AuthGuard('facebook'))
-  instagramAuthRedirect(@Req() req) {
-    console.log(req.user);
-    if (!req.user) {
-      return 'no user from instagram';
-    }
-    return {
-      message: 'User info from instagram',
-      user: req.user,
-    };
-  }
+  // @Get('instagram/callback')
+  // @UseGuards(passport.AuthGuard('facebook'))
+  // instagramAuthRedirect(@Req() req) {
+  //   console.log(req.user);
+  //   if (!req.user) {
+  //     return 'no user from instagram';
+  //   }
+  //   return {
+  //     message: 'User info from instagram',
+  //     user: req.user,
+  //   };
+  // }
 }
