@@ -8,7 +8,7 @@ export class InstagramStrategy extends PassportStrategy(Strategy, "instagram") {
     super({
       clientID: '630869138126008',
       clientSecret: 'e962762d70dc3085b823737ce173439a',
-      callbackURL: "http://https://daleel-app.herokuapp.com//users/instagram/callback",
+      callbackURL: "http://daleel-app.herokuapp.com//users/instagram/callback",
       scope: "email",
       profileFields: ["emails", "name"],
     });
