@@ -121,4 +121,14 @@ export class UsersController {
       user: req.user,
     };
   }
+
+  @Get('/dc')
+   dc() {
+     return 'dc'
+   }
+
+   @Get('/dd')
+   dd() {
+     return 'dd'
+   }
 }
