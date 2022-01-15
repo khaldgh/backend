@@ -9,13 +9,20 @@ import { JwtModule } from '@nestjs/jwt';
 import { GoogleStrategy } from 'src/users/strategies/google.strategy';
 import { FacebookStrategy } from 'src/users/strategies/facebook.strategy';
 import { InstagramAuthModule } from '@nestjs-hybrid-auth/instagram';
+import { HybridAuthModule } from '@nestjs-hybrid-auth/all';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User]), InstagramAuthModule.forRoot({
-    clientID: '630869138126008',
-    clientSecret: 'e962762d70dc3085b823737ce173439a',
-    callbackURL: 'https://daleel-app.herokuapp.com/users/instagram/callback'
-  })],
+  imports: [
+    TypeOrmModule.forFeature([User]),
+    HybridAuthModule.forRoot({
+      instagram: {
+        clientID: '630869138126008',
+        clientSecret: 'e962762d70dc3085b823737ce173439a',
+        callbackURL:
+          'https://daleel-app.herokuapp.com/users/instagram/callback',
+      },
+    }),
+  ],
   controllers: [UsersController],
   providers: [UsersService, AuthService, GoogleStrategy, FacebookStrategy],
 })
