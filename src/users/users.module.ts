@@ -14,7 +14,7 @@ import { InstagramAuthModule } from '@nestjs-hybrid-auth/instagram';
   imports: [TypeOrmModule.forFeature([User]), InstagramAuthModule.forRoot({
     clientID: '630869138126008',
     clientSecret: 'e962762d70dc3085b823737ce173439a',
-    callbackURL: 'http://daleel-app.herokuapp.com/users/instagram'
+    callbackURL: 'http://daleel-app.herokuapp.com/users/instagram/callback'
   })],
   controllers: [UsersController],
   providers: [UsersService, AuthService, GoogleStrategy, FacebookStrategy],
