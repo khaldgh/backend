@@ -20,10 +20,6 @@ import { AuthService } from './auth.service';
 import { currentUser } from './decorators/current-user.decorator';
 import { AuthGuard } from '../guards/auth.guard';
 import * as passport from '@nestjs/passport';
-import {
-  UseInstagramAuth,
-  InstagramAuthResult,
-} from '@nestjs-hybrid-auth/instagram';
 
 @Controller('users')
 // @Serialize(UserDto)
@@ -96,7 +92,7 @@ export class UsersController {
   @UseGuards(passport.AuthGuard('facebook'))
   async facebookAuth(@Req() req) {}
 
-  @Get('/facebook/callback')
+  @Get('facebook/callback')
   @UseGuards(passport.AuthGuard('facebook'))
   facebookAuthRedirect(@Req() req) {
     console.log(req.user);
@@ -109,37 +105,20 @@ export class UsersController {
     };
   }
 
-  @UseInstagramAuth()
   @Get('/instagram')
-  loginWithInstagram() {
-    return 'Login with Instagram';
-  }
+  // @UseGuards(passport.AuthGuard('facebook'))
+  async instagramAuth(@Req() req) {}
 
-  @UseInstagramAuth()
-  @Get('/instagram/callback')
-  instagramCallback(@Req() req): Partial<InstagramAuthResult> {
-    const result: InstagramAuthResult = req.hybridAuthResult;
+  @Get('instagram/callback')
+  // @UseGuards(passport.AuthGuard('facebook'))
+  instagramAuthRedirect(@Req() req) {
+    console.log(req.user);
+    if (!req.user) {
+      return 'no user from instagram';
+    }
     return {
-      accessToken: result.accessToken,
-      refreshToken: result.refreshToken,
-      profile: result.profile,
+      message: 'User info from instagram',
+      user: req.user,
     };
   }
-
-  // @Get('/instagram')
-  // // @UseGuards(passport.AuthGuard('facebook'))
-  // async instagramAuth(@Req() req) {}
-
-  // @Get('instagram/callback')
-  // // @UseGuards(passport.AuthGuard('facebook'))
-  // instagramAuthRedirect(@Req() req) {
-  //   console.log(req.user);
-  //   if (!req.user) {
-  //     return 'no user from instagram';
-  //   }
-  //   return {
-  //     message: 'User info from instagram',
-  //     user: req.user,
-  //   };
-  // }
 }
