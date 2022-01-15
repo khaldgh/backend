@@ -20,6 +20,10 @@ import { AuthService } from './auth.service';
 import { currentUser } from './decorators/current-user.decorator';
 import { AuthGuard } from '../guards/auth.guard';
 import * as passport from '@nestjs/passport';
+import {
+  UseInstagramAuth,
+  InstagramAuthResult,
+} from '@nestjs-hybrid-auth/instagram';
 
 @Controller('users')
 // @Serialize(UserDto)
@@ -92,7 +96,7 @@ export class UsersController {
   @UseGuards(passport.AuthGuard('facebook'))
   async facebookAuth(@Req() req) {}
 
-  @Get('facebook/callback')
+  @Get('/facebook/callback')
   @UseGuards(passport.AuthGuard('facebook'))
   facebookAuthRedirect(@Req() req) {
     console.log(req.user);
@@ -102,6 +106,23 @@ export class UsersController {
     return {
       message: 'User info from facebook',
       user: req.user,
+    };
+  }
+
+  @UseInstagramAuth()
+  @Get('/instagram')
+  loginWithInstagram() {
+    return 'Login with Instagram';
+  }
+
+  @UseInstagramAuth()
+  @Get('/instagram/callback')
+  instagramCallback(@Req() req): Partial<InstagramAuthResult> {
+    const result: InstagramAuthResult = req.hybridAuthResult;
+    return {
+      accessToken: result.accessToken,
+      refreshToken: result.refreshToken,
+      profile: result.profile,
     };
   }
 
