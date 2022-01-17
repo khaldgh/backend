@@ -8,7 +8,7 @@ export class FacebookStrategy extends PassportStrategy(Strategy, "facebook") {
     super({
       clientID: process.env.FCLIENT_ID,
       clientSecret: process.env.FCLIENT_SECRET,
-      callbackURL: "http://localhost:3000/users/facebook/callback",
+      callbackURL: "http://daleel-app.herokuapp.com/users/facebook/callback",
       scope: "email",
       profileFields: ["emails", "name"],
     });
