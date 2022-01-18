@@ -9,8 +9,8 @@ export class TwitterStrategy extends PassportStrategy(Strategy, "twitter") {
     // J1bRMpPbNizIAHJ1JnAPeDFDgyXxB6JlLfljKBEvy45rug0gTA //API KEY SECRET
     // AAAAAAAAAAAAAAAAAAAAACwCYQEAAAAAVIPW1uAA91QzT%2FPz5cKo8NiQvwc%3DYdZlgtoUj7rh5Uco4NuC6a3UHzC9gco7LbKnzwe9Rmq79CIW4t //BEARER TOKEN
     super({
-      clientID: 'NGhjeExvMzViSExZQlB3SUhqZXQ6MTpjaQ',
-      clientSecret: 'VhsxafrakKoUg3bKucpHXwKFgVOeQu8IoswPddjryoPmKUzRgl',
+      consumerKey: 'NGhjeExvMzViSExZQlB3SUhqZXQ6MTpjaQ',
+      consumerSecret: 'VhsxafrakKoUg3bKucpHXwKFgVOeQu8IoswPddjryoPmKUzRgl',
       callbackURL: "http://daleel-app.herokuapp.com/users/twitter/callback",
       scope: "email",
       profileFields: ["emails", "name"],
