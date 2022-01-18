@@ -105,6 +105,23 @@ export class UsersController {
     };
   }
 
+  @Get('/twitter')
+  @UseGuards(passport.AuthGuard('twitter'))
+  async twitterAuth(@Req() req) {}
+
+  @Get('twitter/callback')
+  @UseGuards(passport.AuthGuard('twitter'))
+  twitterAuthRedirect(@Req() req) {
+    console.log(req.user);
+    if (!req.user) {
+      return 'no user from twitter';
+    }
+    return {
+      message: 'User info from twitter',
+      user: req.user,
+    };
+  }
+
   @Get('/instagram')
   @UseGuards(passport.AuthGuard('facebook'))
   async instagramAuth(@Req() req) {}
