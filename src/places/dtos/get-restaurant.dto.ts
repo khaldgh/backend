@@ -2,8 +2,8 @@ import { IsString } from 'class-validator';
 
 export class GetRestaurantDto {
 
-    // @IsString()
-    // resaurant: string
+    @IsString()
+    restaurant: string
 
     @IsString()
     city: string
