@@ -32,10 +32,13 @@ export class PlacesService {
     return places;
   }
 
-  createQuery(gDto: GetRestaurantDto ){
+  createQuery({ 
+    // year, make, model, long, lat, milage 
+    city
+   }: GetRestaurantDto ){
       return this.repo.createQueryBuilder()
       .select('*')
-      .where('city = ":city"',{ city: gDto.city })
+      .where('city = ":city"',{ city })
       // .andWhere('make = :make', {  })
       // .andWhere('model = :model', {  })
       // .andWhere(':long BETWEEN -5 AND 5',  {  })
