@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { Place } from './place.entity';
 import { CreatePlaceDto } from './dtos/create-place.dto';
 import { User } from 'src/users/user.entity';
-import { GetPlaceDto } from './dtos/get-place.dto';
+import { GetRestaurantDto } from './dtos/get-restaurant.dto';
 
 @Injectable()
 export class PlacesService {
@@ -33,11 +33,12 @@ export class PlacesService {
   }
 
   createQuery({ 
-    // year, make, model, long, lat, milage
-   }: GetPlaceDto ){
+    // year, make, model, long, lat, milage 
+    city
+   }: GetRestaurantDto ){
       return this.repo.createQueryBuilder()
-      .select('*')
-      // .where('year - :year BETWEEN -3 AND 3',{  })
+      .select('restaurant')
+      .where('city = :city',{ city })
       // .andWhere('make = :make', {  })
       // .andWhere('model = :model', {  })
       // .andWhere(':long BETWEEN -5 AND 5',  {  })
