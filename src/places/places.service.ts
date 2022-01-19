@@ -37,7 +37,7 @@ export class PlacesService {
     city
    }: GetRestaurantDto ){
       return this.repo.createQueryBuilder()
-      .select('restaurant')
+      .select('*')
       .where('city = :city',{ city })
       // .andWhere('make = :make', {  })
       // .andWhere('model = :model', {  })
