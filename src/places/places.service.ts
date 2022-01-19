@@ -38,16 +38,8 @@ export class PlacesService {
    }: GetRestaurantDto ){
       return this.repo.createQueryBuilder()
       .select('*')
-      .where('city = ":city"',{ city })
-      // .andWhere('make = :make', {  })
-      // .andWhere('model = :model', {  })
-      // .andWhere(':long BETWEEN -5 AND 5',  {  })
-      // .andWhere(':lat BETWEEN -5 AND 5',  { })
-      // .andWhere('approved IS TRUE')
-      // .orderBy('ABS(milage - :milage)', 'DESC')
-      // .setParameters({  })
-      // .limit(3)
-      .getRawMany()
+      .where('city = ":city"',{ city: city || '' })
+       .getRawMany()
   }
 
 }
