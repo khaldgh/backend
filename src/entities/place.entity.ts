@@ -5,22 +5,19 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm"
 export class Place {
 
     @PrimaryGeneratedColumn()
-    id: number;
+    place_id: number;
 
     @Column()
     title: string;
 
     @Column()
-    time: Date;
+    category_id: Date;
 
     @Column()
-    category: string;
+    neighborhood_id: string;
 
     @Column()
-    image: string;
-
-    @Column()
-    description: string;
+    opening_hours_id: string;
 
     @Column()
     isFavorite: boolean;
@@ -29,5 +26,5 @@ export class Place {
     approved: boolean;
 
     @ManyToOne(() => User, (user) => user.places)
-    user: User;
+    user_id: User;
 }

@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Place } from './place.entity';
+import { Place } from '../entities/place.entity';
 import { CreatePlaceDto } from './dtos/create-place.dto';
 import { User } from 'src/users/user.entity';
-import { GetRestaurantDto } from './dtos/get-restaurant.dto';
+import { GetPlaceDto } from './dtos/get-place.dto';
 
 @Injectable()
 export class PlacesService {
@@ -12,7 +12,7 @@ export class PlacesService {
 
   create(createPlaceDto: CreatePlaceDto, user: User) {
     const place = this.repo.create(createPlaceDto);
-    place.user = user;
+    place.user_id = user;
     return this.repo.save(place);
   }
 
@@ -32,14 +32,23 @@ export class PlacesService {
     return places;
   }
 
+
   createQuery({ 
     // year, make, model, long, lat, milage 
-    city
-   }: GetRestaurantDto ){
+    title
+   }: GetPlaceDto ){
       return this.repo.createQueryBuilder()
       .select('*')
-      .where('city = ":city"',{ city: city || '' })
-       .getRawMany()
+      .where('title = ":title"',{ title })
+      // .andWhere('make = :make', {  })
+      // .andWhere('model = :model', {  })
+      // .andWhere(':long BETWEEN -5 AND 5',  {  })
+      // .andWhere(':lat BETWEEN -5 AND 5',  { })
+      // .andWhere('approved IS TRUE')
+      // .orderBy('ABS(milage - :milage)', 'DESC')
+      // .setParameters({  })
+      // .limit(3)
+      .getRawMany()
   }
 
 }
