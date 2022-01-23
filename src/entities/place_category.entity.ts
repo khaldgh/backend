@@ -1,12 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, PrimaryColumn } from "typeorm"
 
 @Entity()
 export class PlaceCategory {
 
-    @PrimaryGeneratedColumn()
+    @PrimaryColumn()
     place_id: number;
 
-    @PrimaryGeneratedColumn()
+    @PrimaryColumn()
     category_id: number;
 
 }
