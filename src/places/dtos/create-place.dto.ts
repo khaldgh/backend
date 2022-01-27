@@ -1,28 +1,39 @@
-import { IsBoolean, IsDate, IsLatitude, IsLongitude, IsString, Max, max, Min, min } from "class-validator";
+import {
+  IsBoolean,
+  IsDate,
+  IsLatitude,
+  IsLongitude,
+  IsString,
+  IsNumber,
+  Max,
+  max,
+  Min,
+  min,
+} from 'class-validator';
 
-
-export class CreatePlaceDto{
-
-    @IsString()
-    title: string;
-
-    @IsDate()
-    time: Date;
-
-    @IsString()
-    category: string;
-    
-    @IsString()
-    image: string;
-
-    @IsString()   
-    description: string;
-    
-    
-    @IsBoolean()
-    isFavorite: boolean;
-
-    @IsBoolean()
-    approved: boolean;
-
+export class CreatePlaceDto {
+  @IsString()
+  title: string;
+  @IsString()
+  description: string;
+  @IsString()
+  signature: string;
+  @IsNumber()
+  category_id: number;
+  @IsNumber()
+  neighborhood_id: number;
+  @IsNumber()
+  opening_hours_id: number;
+  @IsBoolean()
+  isFavorite: boolean;
+  @IsBoolean()
+  approved: boolean;
+  @IsNumber()
+  phone: number;
+  @IsString()
+  website: string;
+  @IsString()
+  instagram: string;
+  @IsString()
+  twitter: string;
 }

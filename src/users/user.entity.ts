@@ -9,14 +9,11 @@ export class User {
 
     @Column()
     email: string;
-    
-    // @Column()
-    // username: string;
 
     @Column()
     password: string;
 
-    @Column({ default: true })
+    @Column({ default: false })
     admin: boolean;
 
     @OneToMany(() => Place, (place) => place.user_id)

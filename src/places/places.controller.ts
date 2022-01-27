@@ -24,7 +24,7 @@ export class PlacesController {
   constructor(private placesService: PlacesService) {}
 
   @Post()
-  // @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @Serialize(PlaceDto)
   createPlace(@Body() body: CreatePlaceDto, @currentUser() user: User) {
     return this.placesService.create(body, user);
