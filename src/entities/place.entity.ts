@@ -1,8 +1,9 @@
 import { User } from 'src/users/user.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToOne } from 'typeorm';
 import { Category } from './category.entity';
 import { Neighborhood } from './neighborhood.entity';
 import { OpeningHours } from './opening_hours.entity';
+import { subCategory } from './sub_category.entity';
 
 @Entity()
 export class Place {
@@ -18,13 +19,19 @@ export class Place {
   @Column()
   signature: string;
   
-  @ManyToOne(() => Category, (category) => category.places)
-  category_id: number;
+  @ManyToOne(() => subCategory, (subCategory) => subCategory.sub_category_id)
+  sub_category_id: number;
+
+  @ManyToOne(() => subCategory, (subCategory) => subCategory.sub_category_id)
+  sub_category_id_2: number;
+
+  @ManyToOne(() => subCategory, (subCategory) => subCategory.sub_category_id)
+  sub_category_id_3: number;
 
   @ManyToOne(() => Neighborhood, (neighborhood) => neighborhood.places)
   neighborhood_id: number;
 
-  @ManyToOne(() => OpeningHours, (openingHours) => openingHours.places)
+  @OneToOne(() => OpeningHours, (openingHours) => openingHours.place)
   opening_hours_id: number;
 
   @Column()

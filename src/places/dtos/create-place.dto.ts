@@ -21,6 +21,12 @@ export class CreatePlaceDto {
   @IsNumber()
   category_id: number;
   @IsNumber()
+  sub_category_id: number;
+  @IsNumber()
+  sub_category_id_2: number;
+  @IsNumber()
+  sub_category_id_3: number;
+  @IsNumber()
   neighborhood_id: number;
   @IsNumber()
   opening_hours_id: number;

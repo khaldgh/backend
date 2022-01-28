@@ -33,6 +33,24 @@ export class PlacesService {
   }
 
 
+  // createQuery({ 
+  //   year, make, model, long, lat, milage 
+  //   title
+  //  }: GetPlaceDto ){
+  //     return this.repo.createQueryBuilder()
+  //     .select('*')
+  //     .where('title = ":title"',{ title })
+  //     .andWhere('make = :make', {  })
+  //     .andWhere('model = :model', {  })
+  //     .andWhere(':long BETWEEN -5 AND 5',  {  })
+  //     .andWhere(':lat BETWEEN -5 AND 5',  { })
+  //     .andWhere('approved IS TRUE')
+  //     .orderBy('ABS(milage - :milage)', 'DESC')
+  //     .setParameters({  })
+  //     .limit(3)
+  //     .getRawMany()
+  // }
+
   createQuery({ 
     // year, make, model, long, lat, milage 
     title

@@ -13,6 +13,6 @@ export class Neighborhood {
     @Column()
     city_id: number;
 
-    @OneToMany(() => Place, (place) => place.category_id)
+    @OneToMany(() => Place, (place) => place.neighborhood_id)
     places: Place[];
 }

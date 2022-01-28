@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, OneToOne } from "typeorm"
 import { Place } from "./place.entity";
 
 @Entity()
@@ -28,7 +28,7 @@ export class OpeningHours {
     @Column()
     Saturday: string;
 
-    @OneToMany(() => Place, (place) => place.category_id)
-    places: Place[];
+    @OneToOne(() => Place, (place) => place.opening_hours_id)
+    place: Place;
 
 }
