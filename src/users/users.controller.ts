@@ -48,7 +48,7 @@ export class UsersController {
   async sendUser(@Body() body: UserDto, @Session() session: any) {
     console.log(body);
     const user = await this.authService.signup(body.email, body.password);
-    session.userId = user.id;
+    session.userId = user.user_id;
     console.log(session.userId);
     return user;
   }
@@ -57,7 +57,7 @@ export class UsersController {
   @Serialize(UserDto)
   async signin(@Body() body: UserDto, @Session() session: any) {
     const user = await this.authService.signin(body.email, body.password);
-    session.userId = user.id;
+    session.userId = user.user_id;
     console.log(session.userId);
     return user;
   }
