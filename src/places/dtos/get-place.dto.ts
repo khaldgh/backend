@@ -8,50 +8,47 @@ import {
 
 export class GetPlaceDto {
 
-  @IsNumber()
-  place_id: number;
+  // @IsNumber()
+  // place_id: number;
 
   @IsString()
   title: string;
 
-  @IsString()
-  description: string;
+  // @IsString()
+  // description: string;
 
-  @IsString()
-  signature: string;
+  // @IsString()
+  // signature: string;
   
-  @IsString()
-  sub_category_id: number;
+  // @IsString()
+  // sub_category_id: number;
 
-  @IsNumber()
-  sub_category_id_2: number;
+  // @IsNumber()
+  // sub_category_id_2: number;
 
-  @IsNumber()
-  sub_category_id_3: number;
+  // @IsNumber()
+  // sub_category_id_3: number;
 
-  @IsNumber()
-  neighborhood_id: number;
+  // @IsNumber()
+  // neighborhood_id: number;
 
-  @IsNumber()
-  opening_hours_id: number;
+  // @IsNumber()
+  // opening_hours_id: number;
 
-  @IsBoolean()
-  isFavorite: boolean;
+  // @IsBoolean()
+  // isFavorite: boolean;
 
-  @IsBoolean()
-  approved: boolean;
+  // @IsBoolean()
+  // approved: boolean;
 
-  @IsNumber()
-  phone: number;
+  // @IsNumber()
+  // phone: number;
 
-  @IsString()
-  website: string;
+  // @IsString()
+  // website: string;
 
-  @IsString()
-  instagram: string;
-
-  @IsString()
-  twitter: string;
+  // @IsString()
+  // instagram: string;
 
   
   // user_id: User;
