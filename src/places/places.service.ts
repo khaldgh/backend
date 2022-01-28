@@ -5,6 +5,7 @@ import { Place } from '../entities/place.entity';
 import { CreatePlaceDto } from './dtos/create-place.dto';
 import { User } from 'src/users/user.entity';
 import { GetPlaceDto } from './dtos/get-place.dto';
+import { PlaceDto } from './dtos/place.dto';
 
 @Injectable()
 export class PlacesService {
@@ -54,7 +55,7 @@ export class PlacesService {
   createQuery({ 
     // year, make, model, long, lat, milage 
     title
-   }: GetPlaceDto ){
+   }: PlaceDto ){
       return this.repo.createQueryBuilder()
       .select('*')
       .where('title = ":title"',{ title })

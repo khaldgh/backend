@@ -11,7 +11,7 @@ export class GetPlaceDto {
   // @IsNumber()
   // place_id: number;
 
-  @IsString()
+  // @IsString()
   title: string;
 
   // @IsString()

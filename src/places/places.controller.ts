@@ -18,6 +18,7 @@ import { PlaceDto } from './dtos/place.dto';
 import { ApprovePlaceDto } from './dtos/approve-place.dto';
 import { AdminGuard } from 'src/guards/admin.guard';
 import { GetPlaceDto } from './dtos/get-place.dto';
+import { Place } from 'src/entities/place.entity';
 
 @Controller('places')
 export class PlacesController {
@@ -37,7 +38,7 @@ export class PlacesController {
   }
 
   @Get()
-  getEstimate(@Query() query: GetPlaceDto) {
+  getEstimate(@Query() query: PlaceDto) {
       return this.placesService.createQuery(query);
   }
 
