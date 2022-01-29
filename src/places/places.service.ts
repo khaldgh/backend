@@ -52,7 +52,7 @@ export class PlacesService {
   //     .getRawMany()
   // }
 
-  createQuery({ 
+  async createQuery({ 
     // year, make, model, long, lat, milage 
     place_id
    }: PlaceDto ){
