@@ -54,11 +54,11 @@ export class PlacesService {
 
   createQuery({ 
     // year, make, model, long, lat, milage 
-    title
+    place_id
    }: PlaceDto ){
       return this.repo.createQueryBuilder()
       .select('*')
-      .where('title = ":title"',{ title })
+      .where('place_id = ":place_id"',{ place_id })
       // .andWhere('make = :make', {  })
       // .andWhere('model = :model', {  })
       // .andWhere(':long BETWEEN -5 AND 5',  {  })
