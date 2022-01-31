@@ -1,25 +1,20 @@
 const { MigrationInterface, QueryRunner } = require("typeorm");
 
-module.exports = class test1643650457807 {
-    name = 'test1643650457807'
+module.exports = class test1643651811887 {
+    name = 'test1643651811887'
 
     async up(queryRunner) {
-        await queryRunner.query(`CREATE TABLE \`neighborhood\` (\`neighborhood_id\` int NOT NULL AUTO_INCREMENT, \`neighborhood\` varchar(255) NOT NULL, \`city_id\` int NOT NULL, PRIMARY KEY (\`neighborhood_id\`)) ENGINE=InnoDB`);
-        await queryRunner.query(`CREATE TABLE \`opening_hours\` (\`opening_hours_id\` int NOT NULL AUTO_INCREMENT, \`Sunday\` varchar(255) NOT NULL, \`Monday\` varchar(255) NOT NULL, \`Tuesday\` varchar(255) NOT NULL, \`Wednesday\` varchar(255) NOT NULL, \`Thursday\` varchar(255) NOT NULL, \`Friday\` varchar(255) NOT NULL, \`Saturday\` varchar(255) NOT NULL, PRIMARY KEY (\`opening_hours_id\`)) ENGINE=InnoDB`);
-        await queryRunner.query(`CREATE TABLE \`sub_category\` (\`sub_category_id\` int NOT NULL AUTO_INCREMENT, \`sub_category\` varchar(255) NOT NULL, \`categoryIdCategoryId\` int NULL, PRIMARY KEY (\`sub_category_id\`)) ENGINE=InnoDB`);
-        await queryRunner.query(`CREATE TABLE \`category\` (\`category_id\` int NOT NULL AUTO_INCREMENT, \`category\` varchar(255) NOT NULL, PRIMARY KEY (\`category_id\`)) ENGINE=InnoDB`);
-        await queryRunner.query(`CREATE TABLE \`city\` (\`city_id\` int NOT NULL AUTO_INCREMENT, \`city\` varchar(255) NOT NULL, PRIMARY KEY (\`city_id\`)) ENGINE=InnoDB`);
-        await queryRunner.query(`CREATE TABLE \`place_category\` (\`place_id\` int NOT NULL, \`category_id\` int NOT NULL, PRIMARY KEY (\`place_id\`, \`category_id\`)) ENGINE=InnoDB`);
-        await queryRunner.query(`ALTER TABLE \`place\` DROP COLUMN \`neighborhood_id\``);
-        await queryRunner.query(`ALTER TABLE \`place\` DROP COLUMN \`opening_hours_id\``);
-        await queryRunner.query(`ALTER TABLE \`place\` DROP COLUMN \`sub_category_id\``);
-        await queryRunner.query(`ALTER TABLE \`place\` DROP COLUMN \`sub_category_id_2\``);
-        await queryRunner.query(`ALTER TABLE \`place\` DROP COLUMN \`sub_category_id_3\``);
-        await queryRunner.query(`ALTER TABLE \`place\` DROP COLUMN \`userId\``);
         await queryRunner.query(`ALTER TABLE \`place\` DROP COLUMN \`instagram\``);
+        await queryRunner.query(`ALTER TABLE \`place\` DROP COLUMN \`neighborhoodIdNeighborhoodId\``);
         await queryRunner.query(`ALTER TABLE \`place\` DROP COLUMN \`phone\``);
+        await queryRunner.query(`ALTER TABLE \`place\` CHANGE \`place_id\` \`place_id\` int NOT NULL`);
+        await queryRunner.query(`ALTER TABLE \`place\` DROP PRIMARY KEY`);
         await queryRunner.query(`ALTER TABLE \`place\` DROP COLUMN \`place_id\``);
         await queryRunner.query(`ALTER TABLE \`place\` DROP COLUMN \`signature\``);
+        await queryRunner.query(`ALTER TABLE \`place\` DROP COLUMN \`subCategoryId2SubCategoryId\``);
+        await queryRunner.query(`ALTER TABLE \`place\` DROP COLUMN \`subCategoryId3SubCategoryId\``);
+        await queryRunner.query(`ALTER TABLE \`place\` DROP COLUMN \`subCategoryIdSubCategoryId\``);
+        await queryRunner.query(`ALTER TABLE \`place\` DROP COLUMN \`userIdUserId\``);
         await queryRunner.query(`ALTER TABLE \`place\` DROP COLUMN \`website\``);
         await queryRunner.query(`ALTER TABLE \`place\` ADD \`place_id\` int NOT NULL PRIMARY KEY AUTO_INCREMENT`);
         await queryRunner.query(`ALTER TABLE \`place\` ADD \`signature\` varchar(255) NOT NULL`);
@@ -136,22 +131,17 @@ module.exports = class test1643650457807 {
         await queryRunner.query(`ALTER TABLE \`place\` DROP COLUMN \`phone\``);
         await queryRunner.query(`ALTER TABLE \`place\` DROP COLUMN \`signature\``);
         await queryRunner.query(`ALTER TABLE \`place\` DROP COLUMN \`place_id\``);
-        await queryRunner.query(`ALTER TABLE \`place\` ADD \`website\` text NULL`);
-        await queryRunner.query(`ALTER TABLE \`place\` ADD \`signature\` text NULL`);
-        await queryRunner.query(`ALTER TABLE \`place\` ADD \`place_id\` int NULL`);
-        await queryRunner.query(`ALTER TABLE \`place\` ADD \`phone\` int NULL`);
-        await queryRunner.query(`ALTER TABLE \`place\` ADD \`instagram\` text NULL`);
-        await queryRunner.query(`ALTER TABLE \`place\` ADD \`userId\` int NULL`);
-        await queryRunner.query(`ALTER TABLE \`place\` ADD \`sub_category_id_3\` int NULL`);
-        await queryRunner.query(`ALTER TABLE \`place\` ADD \`sub_category_id_2\` int NULL`);
-        await queryRunner.query(`ALTER TABLE \`place\` ADD \`sub_category_id\` int NULL`);
-        await queryRunner.query(`ALTER TABLE \`place\` ADD \`opening_hours_id\` int NULL`);
-        await queryRunner.query(`ALTER TABLE \`place\` ADD \`neighborhood_id\` int NULL`);
-        await queryRunner.query(`DROP TABLE \`place_category\``);
-        await queryRunner.query(`DROP TABLE \`city\``);
-        await queryRunner.query(`DROP TABLE \`category\``);
-        await queryRunner.query(`DROP TABLE \`sub_category\``);
-        await queryRunner.query(`DROP TABLE \`opening_hours\``);
-        await queryRunner.query(`DROP TABLE \`neighborhood\``);
+        await queryRunner.query(`ALTER TABLE \`place\` ADD \`website\` varchar(255) NOT NULL`);
+        await queryRunner.query(`ALTER TABLE \`place\` ADD \`userIdUserId\` int NULL`);
+        await queryRunner.query(`ALTER TABLE \`place\` ADD \`subCategoryIdSubCategoryId\` int NULL`);
+        await queryRunner.query(`ALTER TABLE \`place\` ADD \`subCategoryId3SubCategoryId\` int NULL`);
+        await queryRunner.query(`ALTER TABLE \`place\` ADD \`subCategoryId2SubCategoryId\` int NULL`);
+        await queryRunner.query(`ALTER TABLE \`place\` ADD \`signature\` varchar(255) NOT NULL`);
+        await queryRunner.query(`ALTER TABLE \`place\` ADD \`place_id\` int NOT NULL AUTO_INCREMENT`);
+        await queryRunner.query(`ALTER TABLE \`place\` ADD PRIMARY KEY (\`place_id\`)`);
+        await queryRunner.query(`ALTER TABLE \`place\` CHANGE \`place_id\` \`place_id\` int NOT NULL AUTO_INCREMENT`);
+        await queryRunner.query(`ALTER TABLE \`place\` ADD \`phone\` int NOT NULL`);
+        await queryRunner.query(`ALTER TABLE \`place\` ADD \`neighborhoodIdNeighborhoodId\` int NULL`);
+        await queryRunner.query(`ALTER TABLE \`place\` ADD \`instagram\` varchar(255) NOT NULL`);
     }
 }

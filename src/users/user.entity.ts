@@ -16,7 +16,7 @@ export class User {
     @Column({ default: false })
     admin: boolean;
 
-    @OneToMany(() => Place, (place) => place.user_id)
+    @OneToMany(() => Place, (place) => place.userId)
     places: Place[];
 
 }

@@ -50,7 +50,7 @@ export class Place {
   instagram: string;
 
   @ManyToOne(() => User, (user) => user.places)
-  user_id: User;
+  userId: User;
 
 //   @ManyToMany(() => TransferType)
 //   @JoinTable({

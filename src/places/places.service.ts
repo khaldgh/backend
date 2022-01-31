@@ -13,7 +13,7 @@ export class PlacesService {
 
   create(createPlaceDto: CreatePlaceDto, user: User) {
     const place = this.repo.create(createPlaceDto);
-    place.user_id = user;
+    place.userId = user;
     return this.repo.save(place);
   }
 
