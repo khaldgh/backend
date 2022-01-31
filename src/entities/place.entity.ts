@@ -49,9 +49,6 @@ export class Place {
   @Column()
   instagram: string;
 
-  @Column()
-  twitter: string;
-
   @ManyToOne(() => User, (user) => user.places)
   user_id: User;
 
