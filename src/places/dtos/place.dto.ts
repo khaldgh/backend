@@ -30,7 +30,7 @@ export class PlaceDto {
   @Expose()
   instagram: string;
 
-  @Transform(({ obj }) => obj.user.user_id)
+  @Transform(({ obj }) => obj.user_id.user_id)
   @Expose()
   userId: number;
 }
