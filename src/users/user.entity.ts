@@ -17,6 +17,6 @@ export class User {
     admin: boolean;
 
     @OneToMany(() => Place, (place) => place.userId)
-    places: Place[];
+    place: Place[];
 
 }

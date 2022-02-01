@@ -14,5 +14,5 @@ export class Neighborhood {
     city_id: number;
 
     @OneToMany(() => Place, (place) => place.neighborhood_id)
-    places: Place[];
+    place: Place[];
 }

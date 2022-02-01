@@ -19,20 +19,20 @@ export class Place {
   @Column()
   signature: string;
   
-  @ManyToOne(() => subCategory, (subCategory) => subCategory.sub_category_id)
-  sub_category_id: number;
+  @ManyToOne(() => subCategory, (subCategory) => subCategory.place)
+  sub_category_id: subCategory;
 
-  @ManyToOne(() => subCategory, (subCategory) => subCategory.sub_category_id)
-  sub_category_id_2: number;
+  @ManyToOne(() => subCategory, (subCategory) => subCategory.place)
+  sub_category_id_2: subCategory;
 
-  @ManyToOne(() => subCategory, (subCategory) => subCategory.sub_category_id)
-  sub_category_id_3: number;
+  @ManyToOne(() => subCategory, (subCategory) => subCategory.place)
+  sub_category_id_3: subCategory;
 
-  @ManyToOne(() => Neighborhood, (neighborhood) => neighborhood.places)
-  neighborhood_id: number;
+  @ManyToOne(() => Neighborhood, (neighborhood) => neighborhood.place)
+  neighborhood_id: Neighborhood;
 
   @OneToOne(() => OpeningHours, (openingHours) => openingHours.place)
-  opening_hours_id: number;
+  opening_hours_id: OpeningHours;
 
   @Column()
   isFavorite: boolean;
@@ -49,7 +49,7 @@ export class Place {
   @Column()
   instagram: string;
 
-  @ManyToOne(() => User, (user) => user.places)
+  @ManyToOne(() => User, (user) => user.place)
   userId: User;
 
 //   @ManyToMany(() => TransferType)
