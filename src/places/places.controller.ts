@@ -18,7 +18,7 @@ import { PlaceDto } from './dtos/place.dto';
 import { ApprovePlaceDto } from './dtos/approve-place.dto';
 import { AdminGuard } from 'src/guards/admin.guard';
 import { GetPlaceDto } from './dtos/get-place.dto';
-import { Place } from 'src/entities/place.entity';
+import { Place } from 'src/places/entities/place.entity';
 
 @Controller('places')
 export class PlacesController {
@@ -26,8 +26,9 @@ export class PlacesController {
 
   @Post()
   @UseGuards(AuthGuard)
-  @Serialize(PlaceDto)
+  @Serialize(CreatePlaceDto)
   createPlace(@Body() body: CreatePlaceDto, @currentUser() user: User) {
+    console.log(user);
     return this.placesService.create(body, user);
   }
 

@@ -9,7 +9,7 @@ import { Category } from './category.entity';
 import { Place } from './place.entity';
 
 @Entity()
-export class subCategory {
+export class SubCategory {
   @PrimaryGeneratedColumn()
   sub_category_id: number;
 

@@ -1,11 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Place } from '../entities/place.entity';
+import { Place } from './entities/place.entity';
 import { CreatePlaceDto } from './dtos/create-place.dto';
 import { User } from 'src/users/user.entity';
 import { GetPlaceDto } from './dtos/get-place.dto';
 import { PlaceDto } from './dtos/place.dto';
+import { SubCategory } from 'src/places/entities/sub_category.entity';
+import { Neighborhood } from 'src/places/entities/neighborhood.entity';
 
 @Injectable()
 export class PlacesService {
@@ -14,6 +16,11 @@ export class PlacesService {
   create(createPlaceDto: CreatePlaceDto, user: User) {
     const place = this.repo.create(createPlaceDto);
     place.userId = user;
+    // place.neighborhood_id = createPlaceDto.neighborhood_id;
+    // place.sub_category_id = createPlaceDto.sub_category_id;
+    // place.sub_category_id_2 = createPlaceDto.sub_category_id_2;
+    // place.sub_category_id_3 = createPlaceDto.sub_category_id_3;
+    // place.opening_hours_id = createPlaceDto.opening_hours_id;
     return this.repo.save(place);
   }
 

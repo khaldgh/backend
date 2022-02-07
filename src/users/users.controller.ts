@@ -33,7 +33,7 @@ export class UsersController {
   @Serialize(UserDto)
   @UseGuards(AuthGuard)
   whoAmI(@currentUser() user: User, @Session() session: any) {
-    console.log(session);
+    // console.log(session);
     return user;
   }
 
@@ -58,7 +58,7 @@ export class UsersController {
   async signin(@Body() body: UserDto, @Session() session: any) {
     const user = await this.authService.signin(body.email, body.password);
     session.userId = user.user_id;
-    console.log(session.userId);
+    console.log(session);
     return user;
   }
   @Post('/signout')

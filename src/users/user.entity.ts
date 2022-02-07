@@ -1,4 +1,4 @@
-import { Place } from 'src/entities/place.entity';
+import { Place } from 'src/places/entities/place.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity()
