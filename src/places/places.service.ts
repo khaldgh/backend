@@ -16,11 +16,6 @@ export class PlacesService {
   create(createPlaceDto: CreatePlaceDto, user: User) {
     const place = this.repo.create(createPlaceDto);
     place.userId = user;
-    // place.neighborhood_id = createPlaceDto.neighborhood_id;
-    // place.sub_category_id = createPlaceDto.sub_category_id;
-    // place.sub_category_id_2 = createPlaceDto.sub_category_id_2;
-    // place.sub_category_id_3 = createPlaceDto.sub_category_id_3;
-    // place.opening_hours_id = createPlaceDto.opening_hours_id;
     return this.repo.save(place);
   }
 
