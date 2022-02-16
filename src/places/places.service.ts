@@ -58,12 +58,12 @@ export class PlacesService {
 
   async createQuery({ 
     // year, make, model, long, lat, milage 
-    place_id
+    title
    }: PlaceDto ){
       return this.repo.createQueryBuilder()
       .select('*')
       .leftJoin('sub_category','sc', 'sc.sub_category_id = place.subCategoryIdSubCategoryId')
-      .where('place_id = ":place_id"',{ place_id })
+      .where('title = ":title"',{ title })
       // .andWhere('make = :make', {  })
       // .andWhere('model = :model', {  })
       // .andWhere(':long BETWEEN -5 AND 5',  {  })
