@@ -62,7 +62,7 @@ export class PlacesService {
    }: PlaceDto ){
       return this.repo.createQueryBuilder()
       .select('*')
-      .innerJoin('subCategory','sc', 'sc.sub_category_id = place.subCategoryIdSubCategoryId')
+      .innerJoin('sub_category','sc', 'sc.sub_category_id = place.subCategoryIdSubCategoryId')
       .where('place_id = ":place_id"',{ place_id })
       // .andWhere('make = :make', {  })
       // .andWhere('model = :model', {  })
