@@ -36,6 +36,8 @@ export class PlacesService {
   }
 
 
+  // Helper Example
+
   // createQuery({ 
   //   year, make, model, long, lat, milage 
   //   title
@@ -60,6 +62,7 @@ export class PlacesService {
    }: PlaceDto ){
       return this.repo.createQueryBuilder()
       .select('*')
+      .innerJoin('subCategory','sc', 'sc.sub_category_id = place.subCategoryIdSubCategoryId')
       .where('place_id = ":place_id"',{ place_id })
       // .andWhere('make = :make', {  })
       // .andWhere('model = :model', {  })
