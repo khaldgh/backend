@@ -72,7 +72,7 @@ export class PlacesService {
       // .orderBy('ABS(milage - :milage)', 'DESC')
       // .setParameters({  })
       // .limit(3)
-      .getRawOne()
+      .getRawMany()
   }
 
 }
