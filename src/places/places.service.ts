@@ -60,7 +60,7 @@ export class PlacesService {
     // year, make, model, long, lat, milage 
     title
    }: PlaceDto ){
-      return this.repo.createQueryBuilder()
+      return await this.repo.createQueryBuilder()
       .select('*')
       .leftJoin('sub_category','sc', 'sc.sub_category_id = place.subCategoryIdSubCategoryId')
       .where('title = ":title"',{ title })

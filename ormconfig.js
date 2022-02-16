@@ -31,6 +31,7 @@ switch (process.env.NODE_ENV) {
             Object.assign(dbConfig, {
                 type: 'mysql',
                 url: process.env.CLEARDB_DATABASE_URL,
+                logging: true,
                 
                 migrationsRun: true,
                 entities: ['**/*.entity.js'],
