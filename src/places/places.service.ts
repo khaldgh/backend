@@ -63,7 +63,7 @@ export class PlacesService {
       return await this.repo.createQueryBuilder()
       .select('*')
       .leftJoin('sub_category','sc', 'sc.sub_category_id = place.subCategoryIdSubCategoryId')
-      .where('title = ":title"',{ title })
+      .where('title = :title',{ title })
       // .andWhere('make = :make', {  })
       // .andWhere('model = :model', {  })
       // .andWhere(':long BETWEEN -5 AND 5',  {  })
