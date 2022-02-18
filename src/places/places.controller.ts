@@ -40,7 +40,7 @@ export class PlacesController {
 
   @Get()
   @Serialize(PlaceDto)
-  getEstimate(@Query() query: PlaceDto) {
+  getEstimate(@Query() query: GetPlaceDto) {
       return this.placesService.createQuery(query);
   }
 
