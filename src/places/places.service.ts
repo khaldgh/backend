@@ -59,7 +59,7 @@ export class PlacesService {
   async createQuery({ 
     // year, make, model, long, lat, milage 
     title
-   }: PlaceDto ){
+   }: GetPlaceDto ){
       return await this.repo.createQueryBuilder()
       .select('*')
       .leftJoin('sub_category','sc', 'sc.sub_category_id = place.subCategoryIdSubCategoryId')
