@@ -4,21 +4,20 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   OneToMany,
+  PrimaryColumn,
 } from 'typeorm';
 import { Category } from './category.entity';
 import { Place } from './place.entity';
 
 @Entity()
 export class SubCategory {
-  @PrimaryGeneratedColumn()
-  sub_category_id: number;
 
-  @Column()
+  @PrimaryColumn()
   sub_category: string;
 
-  @OneToMany(() => Place, (place) => place.sub_category_id)
-    place: Place[];
+  @OneToMany(() => Place, (place) => place.sub_category)
+  place: Place[];
 
-  @ManyToOne(() => Category, (category) => category.category_id)
+  @ManyToOne(() => Category, (category) => category.category)
   category: Category;
 }

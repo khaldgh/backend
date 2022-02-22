@@ -20,16 +20,16 @@ export class Place {
   signature: string;
   
   @ManyToOne(() => SubCategory, (subCategory) => subCategory.place)
-  sub_category_id: SubCategory;
+  sub_category: SubCategory;
 
   @ManyToOne(() => SubCategory, (subCategory) => subCategory.place)
-  sub_category_id_2: SubCategory;
+  sub_category_2: SubCategory;
 
   @ManyToOne(() => SubCategory, (subCategory) => subCategory.place)
-  sub_category_id_3: SubCategory;
+  sub_category_3: SubCategory;
 
-  @ManyToOne(() => Neighborhood, (neighborhood) => neighborhood.place)
-  neighborhood_id: Neighborhood;
+  @ManyToOne(() => Neighborhood, (neighborhoods) => neighborhoods.places)
+  neighborhoods: Neighborhood;
 
   @OneToOne(() => OpeningHours, (openingHours) => openingHours.place)
   opening_hours_id: OpeningHours;

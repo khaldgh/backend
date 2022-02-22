@@ -6,9 +6,6 @@ import { SubCategory } from "./sub_category.entity";
 export class Category {
 
     @PrimaryGeneratedColumn()
-    category_id: number;
-
-    @Column()
     category: string;
 
     @OneToMany(() => SubCategory, (subCategory) => subCategory.category)
