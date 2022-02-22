@@ -1,13 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, PrimaryColumn } from "typeorm"
 import { Neighborhood } from "./neighborhood.entity";
 
 @Entity()
 export class City {
 
-    @PrimaryGeneratedColumn()
+    @PrimaryColumn()
     city: string;
 
-    @OneToMany(() => Neighborhood, (neighborhood) => neighborhood.city)
+    @OneToMany(() => Neighborhood, (neighborhoods) => neighborhoods.city)
     neighborhoods: Neighborhood[];  
 
 }

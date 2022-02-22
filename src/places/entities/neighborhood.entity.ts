@@ -1,15 +1,15 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, PrimaryColumn } from "typeorm"
 import { City } from "./city.entity";
 import { Place } from "./place.entity";
 
 @Entity()
 export class Neighborhood {
 
-    @PrimaryGeneratedColumn()
+    @PrimaryColumn()
     neighborhood: string;
 
     @ManyToOne(() => City, (city) => city.neighborhoods)
-    city: string;
+    city: City;
 
     @OneToMany(() => Place, (places) => places.neighborhoods)
     places: Place[];
