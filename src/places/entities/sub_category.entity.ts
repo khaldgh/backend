@@ -11,7 +11,6 @@ import { Place } from './place.entity';
 
 @Entity()
 export class SubCategory {
-
   @PrimaryColumn()
   sub_category: string;
 
