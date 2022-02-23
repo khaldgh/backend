@@ -1,8 +1,5 @@
-app.module
-
-/ormconfig.js
-
-/.env
+ormconfig.js
+.env
 
 # compiled output
 /dist
