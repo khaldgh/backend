@@ -2,7 +2,7 @@ app.module
 
 /ormconfig.js
 
-.env
+/.env
 
 # compiled output
 /dist
