@@ -6,7 +6,7 @@ import {
   OneToMany,
   PrimaryColumn,
 } from 'typeorm';
-import { Category } from './category.entity';
+import { Category } from '../../categories/category.entity';
 import { Place } from './place.entity';
 
 @Entity()

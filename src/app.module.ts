@@ -7,6 +7,8 @@ import { APP_PIPE } from '@nestjs/core';
 // import cookieSession from 'cookie-session';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PlacesModule } from './places/places.module';
+import { CategoriesController } from './categories/categories.controller';
+import { CategoriesModule } from './categories/categories.module';
 const cookieSession = require('cookie-session');
 
 @Module({
@@ -18,8 +20,9 @@ const cookieSession = require('cookie-session');
     TypeOrmModule.forRoot(),
     UsersModule,
     PlacesModule,
+    CategoriesModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, CategoriesController],
   providers: [AppService,
     {
       provide: APP_PIPE,

@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, PrimaryColumn } from "typeorm"
-import { Place } from "./place.entity";
-import { SubCategory } from "./sub_category.entity";
+import { Place } from "../places/entities/place.entity";
+import { SubCategory } from "../places/entities/sub_category.entity";
 
 @Entity()
 export class Category {

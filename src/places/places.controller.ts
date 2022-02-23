@@ -19,6 +19,7 @@ import { ApprovePlaceDto } from './dtos/approve-place.dto';
 import { AdminGuard } from 'src/guards/admin.guard';
 import { GetPlaceDto } from './dtos/get-place.dto';
 import { Place } from 'src/places/entities/place.entity';
+import { CategoryDto } from './dtos/category.dto';
 
 @Controller('places')
 export class PlacesController {

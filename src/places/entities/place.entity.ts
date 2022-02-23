@@ -1,6 +1,6 @@
 import { User } from 'src/users/user.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToOne } from 'typeorm';
-import { Category } from './category.entity';
+import { Category } from '../../categories/category.entity';
 import { Neighborhood } from './neighborhood.entity';
 import { OpeningHours } from './opening_hours.entity';
 import { SubCategory } from './sub_category.entity';
