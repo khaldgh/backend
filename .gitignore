@@ -1,6 +1,6 @@
 
 .env
-ormconfig.js
+# ormconfig.js
 
 # compiled output
 /dist
