@@ -77,7 +77,7 @@ export class UsersService {
         (queryPlace) => queryPlace.place_id === place.place_id,
       );
       const duplicateIndex = placesQueryList.indexOf(duplicates[0]);
-      const newQuery = placesQueryList.splice(duplicateIndex, 1);
+      placesQueryList.splice(duplicateIndex, 1);
       user.places = placesQueryList;
     } else {
       user.places = [...placesQueryList, place];
