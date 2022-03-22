@@ -1,8 +1,18 @@
+import { Comment } from 'src/comments/comment.entity';
 import { User } from 'src/users/user.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToOne,
+  ManyToMany,
+  JoinTable,
+  OneToMany,
+} from 'typeorm';
 import { Category } from '../../categories/category.entity';
-import { Neighborhood } from './neighborhood.entity';
-import { OpeningHours } from './opening_hours.entity';
+import { Neighborhood } from '../../neighborhoods/neighborhood.entity';
+import { Image } from './image.entity';
 import { SubCategory } from './sub_category.entity';
 
 @Entity()
@@ -18,45 +28,61 @@ export class Place {
 
   @Column()
   signature: string;
-  
-  @ManyToOne(() => SubCategory, (subCategory) => subCategory.place)
-  sub_category: SubCategory;
 
-  @ManyToOne(() => SubCategory, (subCategory) => subCategory.place)
-  sub_category_2: SubCategory;
+  @ManyToMany(() => SubCategory)
+  @JoinTable()
+  subcategories: SubCategory[];
 
-  @ManyToOne(() => SubCategory, (subCategory) => subCategory.place)
-  sub_category_3: SubCategory;
+  @ManyToMany(() => Neighborhood)
+  @JoinTable()
+  neighborhoods: Neighborhood[];
 
-  @ManyToOne(() => Neighborhood, (neighborhoods) => neighborhoods.places)
-  neighborhoods: Neighborhood;
-
-  @OneToOne(() => OpeningHours, (openingHours) => openingHours.place)
-  opening_hours_id: OpeningHours;
-
-  @Column()
+  @Column({ default: false })
   isFavorite: boolean;
 
   @Column({ default: false })
   approved: boolean;
 
-  @Column()
+  @Column({ default: null })
   phone: number;
 
-  @Column()
+  @Column({ default: null })
   website: string;
 
-  @Column()
+  @Column({ default: null })
   instagram: string;
 
-  @ManyToOne(() => User, (user) => user.place)
-  userId: User;
+  @Column()
+  Sunday: string;
 
-//   @ManyToMany(() => TransferType)
-//   @JoinTable({
-//     name: 'addressGroupsToTransferTypes',
-//     joinColumn: { name: 'addressGroupId' },
-//     inverseJoinColumn: { name: 'transferTypeId' },
-//   })
-//   public transferTypes: TransferType[];
+  @Column()
+  Monday: string;
+
+  @Column()
+  Tuesday: string;
+
+  @Column()
+  Wednesday: string;
+
+  @Column()
+  Thursday: string;
+
+  @Column()
+  Friday: string;
+
+  @Column()
+  Saturday: string;
+
+  @OneToMany(() => Image, (images) => images.place)
+  images: Image[];
+
+  @ManyToOne(() => User, (user) => user.place)
+  creatorId: User;
+
+  @OneToMany(() => Comment, (comment) => comment.place)
+  comments: Comment[];
+
+  @ManyToMany(() => User)
+  @JoinTable()
+  users: User[];
 }

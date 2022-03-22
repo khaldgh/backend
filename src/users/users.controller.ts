@@ -10,6 +10,7 @@ import {
   Session,
   UseGuards,
   Req,
+  Patch,
 } from '@nestjs/common';
 // import { parse } from 'path/posix';
 import { UserDto } from './dtos/user.dto';
@@ -20,6 +21,8 @@ import { AuthService } from './auth.service';
 import { currentUser } from './decorators/current-user.decorator';
 import { AuthGuard } from '../guards/auth.guard';
 import * as passport from '@nestjs/passport';
+import { Category } from 'src/categories/category.entity';
+import { UserFavoriteDto } from 'src/places/dtos/user-favorite.dto';
 
 @Controller('users')
 // @Serialize(UserDto)
@@ -35,6 +38,17 @@ export class UsersController {
   whoAmI(@currentUser() user: User, @Session() session: any) {
     // console.log(session);
     return user;
+  }
+
+  @Post('preferences')
+  async setPreferences(@currentUser() user: User, @Body() categories: Category[]){
+    return await this.usersService.setPreferences(user, categories);
+  }
+
+  @Serialize(UserFavoriteDto)
+  @Patch('/favoritePlace/:id')
+  favoritePlace(@currentUser() user: UserFavoriteDto, @Param('id') id: string ){
+    return this.usersService.favoritePlace(user, id);
   }
 
   @Get()
@@ -138,4 +152,9 @@ export class UsersController {
       user: req.user,
     };
   }
+
+  // @Get('users-preferences')
+  //   async userPreferences(category: ){
+  //     return this.usersService.userPreferences(categoryId);
+  //   }
 }

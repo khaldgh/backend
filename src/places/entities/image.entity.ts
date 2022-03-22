@@ -1,7 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm"
+import { Place } from "./place.entity";
 
 @Entity()
-export class Images {
+export class Image {
 
     @PrimaryGeneratedColumn()
     image_id: number;
@@ -12,7 +13,8 @@ export class Images {
     @Column()
     image_owner: string;
 
-    @Column()
-    place_id: number;
+
+    @ManyToOne(() => Place, (place) => place.images)
+    place: Place;
 
 }

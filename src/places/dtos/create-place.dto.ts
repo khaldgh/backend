@@ -10,9 +10,9 @@ import {
   Min,
   min,
 } from 'class-validator';
-import { Neighborhood } from 'src/places/entities/neighborhood.entity';
-import { OpeningHours } from 'src/places/entities/opening_hours.entity';
+import { Neighborhood } from 'src/neighborhoods/neighborhood.entity';
 import { SubCategory } from 'src/places/entities/sub_category.entity';
+import { SubcategoryDto } from './sub_category.dto';
 
 export class CreatePlaceDto {
   @IsString()
@@ -21,16 +21,6 @@ export class CreatePlaceDto {
   description: string;
   @IsString()
   signature: string;
-  @IsNumber()
-  sub_category_id: SubCategory;
-  @IsNumber()
-  sub_category_id_2: SubCategory;
-  @IsNumber()
-  sub_category_id_3: SubCategory;
-  @IsNumber()
-  neighborhood_id: Neighborhood;
-  @IsNumber()
-  opening_hours_id: OpeningHours;
   @IsBoolean()
   isFavorite: boolean;
   @IsBoolean()
@@ -41,4 +31,19 @@ export class CreatePlaceDto {
   website: string;
   @IsString()
   instagram: string;
+  @IsString()
+  sunday: string;
+  @IsString()
+  monday: string;
+  @IsString()
+  tuesday: string;
+  @IsString()
+  wednesday: string;
+  @IsString()
+  thursday: string;
+  @IsString()
+  friday: string;
+  @IsString()
+  saturday: string;
+
 }

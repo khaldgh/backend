@@ -19,7 +19,13 @@ import { ApprovePlaceDto } from './dtos/approve-place.dto';
 import { AdminGuard } from 'src/guards/admin.guard';
 import { GetPlaceDto } from './dtos/get-place.dto';
 import { Place } from 'src/places/entities/place.entity';
-import { CategoryDto } from './dtos/category.dto';
+import { CategoryDto } from '../categories/category.dto';
+import { CommentDto } from 'src/comments/comment.dto';
+import { SubCategory } from './entities/sub_category.entity';
+import { SubcategoryDto } from './dtos/sub_category.dto';
+import { UserDto } from 'src/users/dtos/user.dto';
+import { Neighborhood } from 'src/neighborhoods/neighborhood.entity';
+import { UserFavoriteDto } from './dtos/user-favorite.dto';
 
 @Controller('places')
 export class PlacesController {
@@ -28,9 +34,14 @@ export class PlacesController {
   @Post()
   @UseGuards(AuthGuard)
   @Serialize(CreatePlaceDto)
-  createPlace(@Body() body: CreatePlaceDto, @currentUser() user: User) {
-    console.log(user);
-    return this.placesService.create(body, user);
+  createPlace(
+    @Body() body: CreatePlaceDto,
+    @Body() subcategories: SubCategory[],
+    @Body() neighborhoods: Neighborhood[],
+    @currentUser() user: UserDto,
+  ) {
+    console.log(body, user);
+    return this.placesService.create(body, subcategories, neighborhoods, user);
   }
 
   @Patch('/:id')
@@ -42,12 +53,20 @@ export class PlacesController {
   @Get()
   @Serialize(PlaceDto)
   getEstimate(@Query() query: GetPlaceDto) {
-      return this.placesService.createQuery(query);
+    return this.placesService.createQuery(query);
   }
 
-
-  @Get('places')
+  @Get('/places')
   getPlaces() {
-      return this.placesService.getPlaces();
+    return this.placesService.getPlaces();
   }
+
+  //   @Post('/comments')
+  //   newCommentPlace(
+  //     commentUser: User,
+  //     commentDto: CommentDto,
+  //     place: Place,
+  //   ){
+  //     return this.placesService.newCommentPlace(commentUser, commentDto, place);
+  //   }
 }

@@ -7,16 +7,17 @@ import {
   PrimaryColumn,
 } from 'typeorm';
 import { Category } from '../../categories/category.entity';
-import { Place } from './place.entity';
 
 @Entity()
 export class SubCategory {
-  @PrimaryColumn()
-  sub_category: string;
 
-  @OneToMany(() => Place, (place) => place.sub_category)
-  place: Place[];
+  @PrimaryGeneratedColumn()
+  sub_category_id: number;
+
+  @Column()
+  sub_category: string;
 
   @ManyToOne(() => Category, (category) => category.category)
   category: Category;
+  
 }
