@@ -7,8 +7,13 @@ export class CategoriesController {
     constructor( private categoriesService: CategoriesService){}
 
     @Get()
-    getCategories(){
+    async getCategories(){
         return this.categoriesService.getCategories();
+    }
+
+    @Get('bigCategories')
+    async getBigCategories(){
+        return this.categoriesService.getBigCategories();
     }
 
     @Post()

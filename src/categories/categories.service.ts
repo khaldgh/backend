@@ -7,17 +7,25 @@ import { CreateCategoryDto } from './create-category.dto';
 
 @Injectable()
 export class CategoriesService {
-    constructor(
-        @InjectRepository(Category) private repo: Repository<Category>,
-        @InjectRepository(User) private userRepo: Repository<User>
-        ){}
+  constructor(
+    @InjectRepository(Category) private repo: Repository<Category>,
+    @InjectRepository(User) private userRepo: Repository<User>,
+  ) {}
 
-    getCategories(){
-       return this.repo.find()
-    }
+  getCategories() {
+    return this.repo.createQueryBuilder().select('*')
+    .where('category_id NOT IN (7, 13, 14)')
+      .getRawMany();
+  }
 
-    async postCategories(createCategoryDto: CreateCategoryDto){
-         const category = this.repo.create(createCategoryDto);
-        return this.repo.save(category);
-    }
+  getBigCategories() {
+    return this.repo.createQueryBuilder().select('*')
+    .where('category_id IN (7, 13, 14)')
+      .getRawMany();
+  }
+
+  async postCategories(createCategoryDto: CreateCategoryDto) {
+    const category = this.repo.create(createCategoryDto);
+    return this.repo.save(category);
+  }
 }

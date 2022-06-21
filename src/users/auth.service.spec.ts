@@ -25,7 +25,7 @@ describe('auth service', () => {
     //   },
       signupUser: async (email: string, password: string) => {
         const user = {
-          id: Math.floor(Math.random() * 99),
+          user_id: Math.floor(Math.random() * 99),
           email,
           password,
         } as User;
@@ -54,7 +54,7 @@ describe('auth service', () => {
   });
 
   it('signs up the user', async () => {
-    const user = await authService.signup('kall@comm', 'some');
+    const user = await authService.signup('kall@comm', 'some', 'some');
     expect(user.password).not.toEqual('some');
     const [salt, hash] = user.password.split('.');
     expect(salt).toBeDefined();
@@ -62,7 +62,7 @@ describe('auth service', () => {
   });
 
   it('throws an error if wrong password was provided', async (done) => {
-    await authService.signup('kall@com', 'pass');
+    await authService.signup('kall@com','some', 'pass');
     try{ 
         await authService.signin('kall@com', 'm')
     } catch(err){
@@ -80,7 +80,7 @@ describe('auth service', () => {
 //   });
 
   it('returns a user if correct password was provided', async () => {
-    await authService.signup('kall@cam', 'pass');
+    await authService.signup('kall@cam', 'some', 'pass');
 
     const user = await authService.signin('kall@cam', 'pass');
     expect(user).toBeDefined();

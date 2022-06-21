@@ -9,6 +9,7 @@ import {
   ManyToMany,
   JoinTable,
   ManyToOne,
+  CreateDateColumn,
 } from 'typeorm';
 
 @Entity()
@@ -18,6 +19,9 @@ export class Comment {
 
   @Column()
   comment: string;
+
+  @CreateDateColumn()
+  CreatedAt: Date;
 
   @ManyToOne(() => User, (user) => user.Comment)
   user: User;

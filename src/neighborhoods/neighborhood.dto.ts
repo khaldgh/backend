@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { IsString } from 'class-validator';
+import { IsNumber, IsString } from 'class-validator';
 
 export class NeighborhoodDto {
 
@@ -7,6 +7,6 @@ export class NeighborhoodDto {
     // neighborhood: string;
 
     @IsString()
-    city: string;
+    city_id: string;
 
 }

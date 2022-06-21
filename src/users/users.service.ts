@@ -5,17 +5,23 @@ import { Category } from 'src/categories/category.entity';
 import { CreateCategoryDto } from 'src/categories/create-category.dto';
 import { CategoryDto } from 'src/categories/category.dto';
 import { Repository } from 'typeorm';
-import { UserDto } from './dtos/user.dto';
+import { SignupUserDto } from './dtos/signup_user.dto';
 import { User } from './user.entity';
-import { UserFavoriteDto } from 'src/places/dtos/user-favorite.dto';
+import { UsersFavoriteDto } from 'src/places/dtos/users-favorite.dto';
 import { Place } from 'src/places/entities/place.entity';
 import { currentUser } from './decorators/current-user.decorator';
+import { Admin } from './admin.entity';
+import { UsersFavorites } from 'src/users-favorites/users_favorites.entity';
+import { UserDto } from './dtos/user.dto';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private repo: Repository<User>,
     @InjectRepository(Place) private placesRepo: Repository<Place>,
+    @InjectRepository(UsersFavorites) private ufRepo: Repository<UsersFavorites>,
+    @InjectRepository(UsersFavorites)
+    private FavoritesRepo: Repository<UsersFavorites>,
   ) {}
 
   async findOne(id: number) {
@@ -31,7 +37,7 @@ export class UsersService {
     return user;
   }
 
-  async create(body: UserDto) {
+  async create(body: SignupUserDto) {
     const user = this.repo.create(body);
     //    console.log(user);
     const savedUser = await this.repo.save(user);
@@ -39,8 +45,8 @@ export class UsersService {
     return savedUser;
   }
 
-  async signupUser(email: string, password: string) {
-    const createUser = this.repo.create({ email, password });
+  async signupUser(email: string, username, password: string) {
+    const createUser = this.repo.create({ email, username, password });
 
     const user = await this.repo.save(createUser);
 
@@ -53,35 +59,69 @@ export class UsersService {
     return user;
   }
 
-  async favoritePlace(user: UserFavoriteDto, id: string) {
-    var idList: number[] = [];
-    const place = await this.placesRepo.findOne(id);
-    var placesQueryList = await this.placesRepo
+  async getPreferences(user: User) {
+    const userId = user.user_id;
+    const preferences = await this.repo
       .createQueryBuilder()
-      .select(
-        'place_id, title, description, signature, isFavorite, approved, phone, website, instagram, sunday, monday, tuesday, wednesday, thursday, friday, saturday',
-      )
-      .innerJoin(
-        'user_places_place',
-        'upp',
-        'upp.placePlaceId = place.place_id',
-      )
-      .where(`userUserId = ${user.user_id}`)
+      .select('category_id, category')
+      .innerJoin('preferences', 'p', 'p.userUserId = user_id')
+      .innerJoin('category', 'c', 'category_id = p.categoryCategoryId')
+      .where('user_id = :userId', { userId })
       .getRawMany();
 
-    for (let i = 0; i < placesQueryList.length; i++) {
-      idList.push(placesQueryList[i].place_id);
-    }
-    if (idList.includes(place.place_id)) {
-      var duplicates = placesQueryList.filter(
-        (queryPlace) => queryPlace.place_id === place.place_id,
+      console.log(preferences);
+
+      return preferences;
+    // return user.Categories;
+  }
+
+  async favoritePlaces(user: UserDto, id: string) {
+    const usersFavorite = this.FavoritesRepo.create();
+
+    const place = await this.placesRepo.findOne(id);
+
+    const usersFavorites = await this.FavoritesRepo.find();
+
+    const filteredObject = usersFavorites.find((object) => {
+      return (
+        object['userId'] === user.user_id && object['placeId'] === parseInt(id)
       );
-      const duplicateIndex = placesQueryList.indexOf(duplicates[0]);
-      placesQueryList.splice(duplicateIndex, 1);
-      user.places = placesQueryList;
-    } else {
-      user.places = [...placesQueryList, place];
+    });
+
+    if (usersFavorites.length == 0 || !filteredObject) {
+      usersFavorite.place = place;
+      usersFavorite.placeId = parseInt(id);
+      usersFavorite.user = user;
+      usersFavorite.userId = user.user_id;
+      this.FavoritesRepo.save(usersFavorite);
+    } else if (filteredObject) {
+      const foundUF = await this.FavoritesRepo.findOne(
+        filteredObject.usersFavoriteId,
+      );
+      foundUF.place = place;
+      foundUF.user = user;
+      this.FavoritesRepo.save(foundUF);
     }
+
     return this.repo.save(user);
+  }
+
+  async removeUserFavorite(user: UserDto, id: string) {
+    const usersFavorites = await this.FavoritesRepo.find();
+
+    const filteredObject = usersFavorites.find((object) => {
+      return (
+        object['userId'] === user.user_id && object['placeId'] === parseInt(id)
+      );
+    });
+
+    await this.FavoritesRepo.remove(filteredObject);
+  }
+
+  async makeAdmin(user: User, session: any) {
+    const foundUser = await this.repo.findOne(user);
+    const adminUser = new Admin();
+    adminUser.user = foundUser;
+    session.admin = adminUser.user;
   }
 }

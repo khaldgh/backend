@@ -9,11 +9,11 @@ import {
   ManyToMany,
   JoinTable,
   OneToMany,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Category } from '../../categories/category.entity';
 import { Neighborhood } from '../../neighborhoods/neighborhood.entity';
-import { Image } from './image.entity';
-import { SubCategory } from './sub_category.entity';
+import { UsersFavorites } from '../../users-favorites/users_favorites.entity';
 
 @Entity()
 export class Place {
@@ -25,20 +25,6 @@ export class Place {
 
   @Column()
   description: string;
-
-  @Column()
-  signature: string;
-
-  @ManyToMany(() => SubCategory)
-  @JoinTable()
-  subcategories: SubCategory[];
-
-  @ManyToMany(() => Neighborhood)
-  @JoinTable()
-  neighborhoods: Neighborhood[];
-
-  @Column({ default: false })
-  isFavorite: boolean;
 
   @Column({ default: false })
   approved: boolean;
@@ -73,16 +59,26 @@ export class Place {
   @Column()
   Saturday: string;
 
-  @OneToMany(() => Image, (images) => images.place)
-  images: Image[];
+  @UpdateDateColumn()
+  updated_at: Date;
 
   @ManyToOne(() => User, (user) => user.place)
   creatorId: User;
 
+  @ManyToOne(() => Category, (category) => category.places)
+  category: Category;
+
   @OneToMany(() => Comment, (comment) => comment.place)
   comments: Comment[];
 
-  @ManyToMany(() => User)
+  @ManyToMany(() => Neighborhood)
   @JoinTable()
-  users: User[];
+  neighborhoods: Neighborhood[];
+
+  @OneToMany(() => UsersFavorites, (usersFavorites) => usersFavorites.place)
+  usersFavorites: UsersFavorites[];
+
+  // @ManyToMany(() => User)
+  // @JoinTable()
+  // userFavorites: User[];
 }

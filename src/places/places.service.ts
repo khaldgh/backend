@@ -3,107 +3,314 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Place } from './entities/place.entity';
 import { CreatePlaceDto } from './dtos/create-place.dto';
-import { User } from 'src/users/user.entity';
-import { GetPlaceDto } from './dtos/get-place.dto';
-import { PlaceDto } from './dtos/place.dto';
-import { SubCategory } from 'src/places/entities/sub_category.entity';
 import { Neighborhood } from 'src/neighborhoods/neighborhood.entity';
-import { Comment } from 'src/comments/comment.entity';
 import { UserDto } from 'src/users/dtos/user.dto';
-import { UserFavoriteDto } from './dtos/user-favorite.dto';
+import { Category } from 'src/categories/category.entity';
+import { PlaceCateogryDto } from 'src/categories/place-category.dto';
+import { ApprovePlaceDto } from './dtos/approve-place.dto';
+import { DateTime } from 'aws-sdk/clients/devicefarm';
 
 @Injectable()
 export class PlacesService {
-  constructor(@InjectRepository(Place) private repo: Repository<Place>) {}
+  constructor(
+    @InjectRepository(Place) private repo: Repository<Place>,
+    @InjectRepository(Category) private categoryRepo: Repository<Category>,
+  ) {}
 
-  create(
+  plcId: number = 0;
+
+  async create(
     createPlaceDto: CreatePlaceDto,
-    subcategories: SubCategory[],
-    neighborhoods: Neighborhood[],
     user: UserDto,
   ) {
-    console.log(subcategories['subcategories']);
     const place = this.repo.create(createPlaceDto);
-    place.subcategories = subcategories['subcategories'];
-    place.neighborhoods = neighborhoods['neighborhoods'];
+    place.neighborhoods = place.neighborhoods
+    // console.log(category.category_id)
+    // const foundCat = await this.categoryRepo.findOne(category.category_id);
+    // place.category = foundCat;
     place.creatorId = user;
-    // console.log(place, 'THE SERVICE');
-    return this.repo.save(place);
+    await this.repo.save(place).finally(() => {
+      this.plcId = place.place_id;
+    });
+    return this.plcId;
   }
 
-  async changeApproval(id: string, approved: boolean) {
-    const place = await this.repo.findOne(id);
+  async changeApproval(id: string, updatedPlace: ApprovePlaceDto) {
+    var place = await this.repo.findOne(id);
     if (!place) {
       throw new NotFoundException('place not found');
     }
 
-    place.approved = approved;
+    place.title = updatedPlace.title;
+    place.approved = updatedPlace.approved;
+    place.description = updatedPlace.description;
+    place.phone = updatedPlace.phone;
+    place.website = updatedPlace.website;
+    place.instagram = updatedPlace.instagram;
+
     return this.repo.save(place);
   }
 
-  async getPlaces() {
-    const places = await this.repo.find();
+  async deletePlace(id: number) {
+    this.repo.delete(id);
+  }
+
+  async getOnePlace(id: number) {
+    // return await this.repo.findOne(id);
+    const place = await this.repo
+      .createQueryBuilder()
+      .select(
+        'place_id,title,description,approved,phone,website,instagram,Sunday,monday,tuesday,wednesday,thursday,friday,saturday, category_id, category,user_id, username, email',
+      )
+      .innerJoin('category', 'c', 'c.category_id = categoryCategoryId')
+      .innerJoin('user', 'u', 'u.user_id = creatorIdUserId')
+      .where(`place_id = ${id}`)
+      .getRawOne();
+
+    const neighborhoods = await this.repo
+      .createQueryBuilder()
+      .select('neighborhood_id, neighborhood')
+      .innerJoin(
+        'place_neighborhoods_neighborhood',
+        'pnn',
+        'place_id = pnn.placePlaceId',
+      )
+      .innerJoin(
+        'neighborhood',
+        'n',
+        'n.neighborhood_id = pnn.neighborhoodNeighborhoodId',
+      )
+      .where(`place_id = ${id}`)
+      .getRawMany();
+
+    place.neighborhoods = neighborhoods;
+
+    const fp = await this.repo.findOne(place.place_id);
+
+    fp.neighborhoods = neighborhoods;
+    fp.approved = true;
+    console.log(fp);
+
+    await this.repo.save(fp);
+
+    return place;
+  }
+
+  async getFavoritePlaces(userId) {
+    const places = await this.repo
+      .createQueryBuilder()
+      .select(
+        'place_id,title, description,approved,phone,website,instagram,Sunday,monday,tuesday,wednesday,thursday,friday,saturday, category_id, category, email',
+      )
+      .innerJoin('category', 'c', 'c.category_id = categoryCategoryId')
+      .innerJoin('user', 'u')
+      .innerJoin('users_Favorites', 'uf', `uf.userUserId = ${userId}`)
+      .where('place_id = placePlaceId')
+      .andWhere('approved = 1')
+      .andWhere(`user_id = ${userId}`)
+      .orderBy('creationDate', 'DESC')
+      .getRawMany();
+
+    const neighborhoods = await this.repo
+      .createQueryBuilder()
+      .select(
+        'neighborhood_id, neighborhood, neighborhoodNeighborhoodId, placePlaceId',
+      )
+      .innerJoin(
+        'place_neighborhoods_neighborhood',
+        'pnn',
+        'place_id = pnn.placePlaceId',
+      )
+      .innerJoin(
+        'neighborhood',
+        'n',
+        'n.neighborhood_id = pnn.neighborhoodNeighborhoodId',
+      )
+      .getRawMany();
+
+    places.forEach((place) => {
+      let nList: Neighborhood[] = [];
+      for (let i = 0; i < neighborhoods.length; i++) {
+        place.place_id === neighborhoods[i].placePlaceId
+          ? nList.push(neighborhoods[i])
+          : 0;
+      }
+      place.neighborhoods = nList;
+      this.repo.save(place);
+    });
     return places;
   }
 
-  
-
-  // async newCommentPlace(
-  //   commentUser: User,
-  //   commentDto: CommentDto,
-  //   place: Place,
-  // ) {
-  //    const placeComment = await this.commentRepo.save({
-  //       comment: commentDto.comment,
-  //       user: commentUser,
-  //    })
-
-  //   place.comment = [...place.comment, placeComment]
-  //   this.repo.save(place);
-
-  // }
-
-  // Helper Example
-
-  // createQuery({
-  //   year, make, model, long, lat, milage
-  //   title
-  //  }: GetPlaceDto ){
-  //     return this.repo.createQueryBuilder()
-  //     .select('*')
-  //     .where('title = ":title"',{ title })
-  //     .andWhere('make = :make', {  })
-  //     .andWhere('model = :model', {  })
-  //     .andWhere(':long BETWEEN -5 AND 5',  {  })
-  //     .andWhere(':lat BETWEEN -5 AND 5',  { })
-  //     .andWhere('approved IS TRUE')
-  //     .orderBy('ABS(milage - :milage)', 'DESC')
-  //     .setParameters({  })
-  //     .limit(3)
-  //     .getRawMany()
-  // }
-
-  async createQuery({
-    // year, make, model, long, lat, milage
-    title,
-  }: GetPlaceDto) {
-    return await this.repo
+  async getPlaces() {
+    const places = await this.repo
       .createQueryBuilder()
-      .select('*')
-      .leftJoin(
-        'sub_category',
-        'sc',
-        'sub_category.sub_category_id = place.subCategoryIdSubCategoryId',
+      .select(
+        'place_id,title, description,approved,phone,website,instagram,Sunday,monday,tuesday,wednesday,thursday,friday,saturday, email',
       )
-      .where('title = :title', { title })
-      // .andWhere('make = :make', {  })
-      // .andWhere('model = :model', {  })
-      // .andWhere(':long BETWEEN -5 AND 5',  {  })
-      // .andWhere(':lat BETWEEN -5 AND 5',  { })
-      // .andWhere('approved IS TRUE')
-      // .orderBy('ABS(milage - :milage)', 'DESC')
-      // .setParameters({  })
-      // .limit(3)
+      .innerJoin('category', 'c', 'c.category_id = categoryCategoryId')
+      .innerJoin('user', 'u', 'u.user_id = creatorIdUserId')
+      .where('approved = 1')
+      .orderBy('place_id', 'ASC')
       .getRawMany();
+
+      const categories = await this.repo
+      .createQueryBuilder()
+      .select(
+        'category_id, category',
+      )
+      .innerJoin('category', 'c', 'c.category_id = categoryCategoryId')
+      .getRawOne()
+
+    const neighborhoods = await this.repo
+      .createQueryBuilder()
+      .select(
+        'neighborhood_id, neighborhood, neighborhoodNeighborhoodId, placePlaceId',
+      )
+      .innerJoin(
+        'place_neighborhoods_neighborhood',
+        'pnn',
+        'place_id = pnn.placePlaceId',
+      )
+      .innerJoin(
+        'neighborhood',
+        'n',
+        'n.neighborhood_id = pnn.neighborhoodNeighborhoodId',
+      )
+      .getRawMany();
+
+      console.log(categories);
+
+      places.forEach((place) => {
+        let cList: Category[] = [];
+        for (let i = 0; i < categories.length; i++) {
+          place.categoryCategoryId === categories[i].category_id
+            ? cList.push(categories[i])
+            : 0;
+        }
+        console.log(cList)
+        place.categories = cList;
+        this.repo.save(place);
+      });
+
+    places.forEach((place) => {
+      let nList: Neighborhood[] = [];
+      for (let i = 0; i < neighborhoods.length; i++) {
+        place.place_id === neighborhoods[i].placePlaceId
+          ? nList.push(neighborhoods[i])
+          : 0;
+      }
+      place.neighborhoods = nList;
+      this.repo.save(place);
+    });
+    return places;
+  }
+
+  async mostDayVisitedPlaces(){
+    await this.repo.createQueryBuilder()
+    .select('*')
+    .where('updated_at >= NOW() - INTERVAL 1 DAY')
+    .getRawMany()
+  }
+
+  async mostWeekVisitedPlaces(){
+    await this.repo.createQueryBuilder()
+    .select('*')
+    .where('updated_at >= NOW() - INTERVAL 1 WEEK')
+    .getRawMany()
+  }
+
+  async queryPlaces(categories: string) {
+    const catsArray: number[] = [];
+    var cats = categories['categories'];
+    var splitCats = cats.split(',');
+    for (var num of splitCats) {
+      console.log(num);
+      var parsed = parseInt(num);
+      catsArray.push(parsed);
+    }
+
+    const places = await this.repo
+      .createQueryBuilder()
+      .select(
+        'place_id,title, description,approved,phone,website,instagram,Sunday,monday,tuesday,wednesday,thursday,friday,saturday, category_id, category, email',
+      )
+      .innerJoin('category', 'c', 'c.category_id = categoryCategoryId')
+      .innerJoin('user', 'u', 'u.user_id = creatorIdUserId')
+      .where('approved = 1')
+      .andWhere('categoryCategoryId in (:catsArray)', { catsArray })
+      .orderBy('place_id', 'ASC')
+      .getRawMany();
+
+    const neighborhoods = await this.repo
+      .createQueryBuilder()
+      .select(
+        'neighborhood_id, neighborhood, neighborhoodNeighborhoodId, placePlaceId',
+      )
+      .innerJoin(
+        'place_neighborhoods_neighborhood',
+        'pnn',
+        'place_id = pnn.placePlaceId',
+      )
+      .innerJoin(
+        'neighborhood',
+        'n',
+        'n.neighborhood_id = pnn.neighborhoodNeighborhoodId',
+      )
+      .getRawMany();
+
+    places.forEach((place) => {
+      let nList: Neighborhood[] = [];
+      for (let i = 0; i < neighborhoods.length; i++) {
+        place.place_id === neighborhoods[i].placePlaceId
+          ? nList.push(neighborhoods[i])
+          : 0;
+      }
+      place.neighborhoods = nList;
+      this.repo.save(place);
+    });
+    return places;
+  }
+
+  async getPreApprovedPlaces() {
+    const places = await this.repo
+      .createQueryBuilder()
+      .select(
+        'place_id,title,description,approved,phone,website,instagram,Sunday,monday,tuesday,wednesday,thursday,friday,saturday, category_id, category, email',
+      )
+      .innerJoin('category', 'c', 'c.category_id = categoryCategoryId')
+      .innerJoin('user', 'u', 'u.user_id = creatorIdUserId')
+      .orderBy('place_id', 'ASC')
+      .where('approved = 0')
+      .getRawMany();
+
+    const neighborhoods = await this.repo
+      .createQueryBuilder()
+      .select(
+        'neighborhood_id, neighborhood, neighborhoodNeighborhoodId, placePlaceId, city_id, city',
+      )
+      .innerJoin(
+        'place_neighborhoods_neighborhood',
+        'pnn',
+        'place_id = pnn.placePlaceId',
+      )
+      .innerJoin(
+        'neighborhood',
+        'n',
+        'n.neighborhood_id = pnn.neighborhoodNeighborhoodId',
+      )
+      .innerJoin('city', 'c', 'n.cityCityId = city_id')
+      .getRawMany();
+
+    places.forEach((place) => {
+      let nList: Neighborhood[] = [];
+      for (let i = 0; i < neighborhoods.length; i++) {
+        place.place_id === neighborhoods[i].placePlaceId
+          ? nList.push(neighborhoods[i])
+          : 0;
+      }
+      place.neighborhoods = nList;
+      this.repo.save(place);
+    });
+    return places;
   }
 }

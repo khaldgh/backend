@@ -15,11 +15,11 @@ export class NeighborhoodsService {
     this.repo.find();
   }
   
-  async neighborhoodQuery({ city }: NeighborhoodDto) {
+  async neighborhoodQuery({ city_id }: NeighborhoodDto) {
     return this.repo
       .createQueryBuilder()
-      .select('neighborhood')
-      .where('cityCity = :city', { city } )
+      .select('neighborhood_id, neighborhood')
+      .where('cityCityId = :city_id', { city_id } )
       .getRawMany();
   }
 }

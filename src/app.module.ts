@@ -15,6 +15,7 @@ import { NeighborhoodsController } from './neighborhoods/neighborhoods.controlle
 import { NeighborhoodsService } from './neighborhoods/neighborhoods.service';
 import { NeighborhoodsModule } from './neighborhoods/neighborhoods.module';
 import { CommentsModule } from './comments/comments.module';
+import { UsersFavoritesModule } from './users-favorites/users-favorites.module';
 const cookieSession = require('cookie-session');
 
 @Module({
@@ -30,6 +31,7 @@ const cookieSession = require('cookie-session');
     CitiesModule,
     NeighborhoodsModule,
     CommentsModule,
+    UsersFavoritesModule,
   ],
   controllers: [
     AppController,

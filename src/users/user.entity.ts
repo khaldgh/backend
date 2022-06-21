@@ -1,6 +1,7 @@
 import { Category } from 'src/categories/category.entity';
 import { Comment } from 'src/comments/comment.entity';
 import { Place } from 'src/places/entities/place.entity';
+import { UsersFavorites } from 'src/users-favorites/users_favorites.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -8,12 +9,17 @@ import {
   OneToMany,
   ManyToMany,
   JoinTable,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
   user_id: number;
+
+  @Column()
+  username: string;
 
   @Column()
   email: string;
@@ -28,12 +34,13 @@ export class User {
   Comment: Comment[];
 
   @ManyToMany(() => Category)
-  @JoinTable()
+  @JoinTable({ name: 'preferences' })
   Categories: Category[];
 
-  @ManyToMany(() => Place)
-  @JoinTable()
-  places: Place[];
+  @OneToMany(() => UsersFavorites, (usersFavorites) => usersFavorites.user)
+  usersFavorites: UsersFavorites[];
 
-  
+  // @ManyToMany(() => Place)
+  // @JoinTable({ name: 'usersFavorites' ,  })
+  // places: Place[];
 }

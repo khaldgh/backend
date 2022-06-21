@@ -12,9 +12,10 @@ import { Admin } from './admin.entity';
 import { Owner } from './owner.entity';
 import { PlacesModule } from 'src/places/places.module';
 import { Place } from 'src/places/entities/place.entity';
+import { UsersFavorites } from 'src/users-favorites/users_favorites.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Admin, Owner, Place]), PlacesModule],
+  imports: [TypeOrmModule.forFeature([User, Admin, Owner, Place, UsersFavorites]), PlacesModule],
   controllers: [UsersController],
   providers: [
     UsersService,

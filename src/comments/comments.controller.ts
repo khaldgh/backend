@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { PlaceDto } from 'src/places/dtos/place.dto';
 import { PlaceCommentDto } from 'src/places/dtos/place_comment.dto';
 import { Place } from 'src/places/entities/place.entity';
@@ -13,6 +13,12 @@ export class CommentsController {
 
     @Post()
     async userComment(@currentUser() user: User, @Body() commentDto: CommentDto, @Body() placeId: PlaceCommentDto){
-        return this.commentsService.userComment(user, commentDto, placeId);
+        return this.commentsService.userComment(user, placeId, commentDto);
+    }
+
+    @Get('/:place_id')
+    async getComments(@Param('place_id') placeId: number) {
+        console.log(placeId);
+        return this.commentsService.getComments(placeId);
     }
 }

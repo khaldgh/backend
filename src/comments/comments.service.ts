@@ -12,14 +12,15 @@ export class CommentsService {
   constructor(
     @InjectRepository(Comment) private repo: Repository<Comment>,
     @InjectRepository(Place) private placeRepo: Repository<Place>,
+    @InjectRepository(User) private userRepo: Repository<User>,
   ) {}
 
   // this function links the user, place and the comment together, to help seperate each post with their respective comments
 
   async userComment(
     user: User,
-    commentDto: CommentDto,
     placeId: PlaceCommentDto,
+    commentDto: CommentDto,
   ) {
     await this.repo.save({
       comment: commentDto.comment,
@@ -27,7 +28,26 @@ export class CommentsService {
       place: placeId,
     });
 
-
     return commentDto;
+  }
+
+  async getComments(placeId: number) {
+    var users: User[] = [];
+
+      // var users: User[] = [];
+
+
+      const comments = await this.repo
+    .createQueryBuilder()
+    .select('comment_id, comment, user_id, email, username')
+    .innerJoin('user', 'u', 'user_id = userUserId')
+    .where(`placePlaceId = ${placeId}`)
+    .orderBy('createdAt', 'DESC')
+    .getRawMany();
+
+
+    return comments;
+
+    
   }
 }

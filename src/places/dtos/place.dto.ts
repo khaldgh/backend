@@ -11,9 +11,6 @@ export class PlaceDto {
   @IsString()
   @Expose()
   description: string;
-  @IsString()
-  @Expose()
-  signature: string;
   @IsBoolean()
   @Expose()
   isFavorite: boolean;

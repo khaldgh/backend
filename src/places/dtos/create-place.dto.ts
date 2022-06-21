@@ -1,3 +1,4 @@
+import { Expose, Type } from 'class-transformer';
 import {
   IsBoolean,
   IsDate,
@@ -9,9 +10,12 @@ import {
   max,
   Min,
   min,
+  IsObject,
+  IsArray,
 } from 'class-validator';
+import { Category } from 'src/categories/category.entity';
+import { PlaceCateogryDto } from 'src/categories/place-category.dto';
 import { Neighborhood } from 'src/neighborhoods/neighborhood.entity';
-import { SubCategory } from 'src/places/entities/sub_category.entity';
 import { SubcategoryDto } from './sub_category.dto';
 
 export class CreatePlaceDto {
@@ -19,10 +23,6 @@ export class CreatePlaceDto {
   title: string;
   @IsString()
   description: string;
-  @IsString()
-  signature: string;
-  @IsBoolean()
-  isFavorite: boolean;
   @IsBoolean()
   approved: boolean;
   @IsNumber()
@@ -32,18 +32,27 @@ export class CreatePlaceDto {
   @IsString()
   instagram: string;
   @IsString()
-  sunday: string;
+  Sunday: string;
   @IsString()
-  monday: string;
+  Monday: string;
   @IsString()
-  tuesday: string;
+  Tuesday: string;
   @IsString()
-  wednesday: string;
+  Wednesday: string;
   @IsString()
-  thursday: string;
+  Thursday: string;
   @IsString()
-  friday: string;
+  Friday: string;
   @IsString()
-  saturday: string;
+  Saturday: string;
 
+  // @Expose()
+  @IsObject()
+  @Type(() => PlaceCateogryDto)
+  category: PlaceCateogryDto
+  
+  // @Expose()
+  // @Type(() => Neighborhood)
+  @IsArray()
+  neighborhoods: Neighborhood[]
 }

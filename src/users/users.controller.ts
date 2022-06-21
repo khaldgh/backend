@@ -11,9 +11,12 @@ import {
   UseGuards,
   Req,
   Patch,
+  Put,
+  Delete,
 } from '@nestjs/common';
 // import { parse } from 'path/posix';
-import { UserDto } from './dtos/user.dto';
+import { SignupUserDto } from './dtos/signup_user.dto';
+import { SigninUserDto } from './dtos/signin_user.dto';
 import { UsersService } from './users.service';
 import { User } from './user.entity';
 import { Serialize } from '../interceptors/serialize.interceptor';
@@ -22,7 +25,8 @@ import { currentUser } from './decorators/current-user.decorator';
 import { AuthGuard } from '../guards/auth.guard';
 import * as passport from '@nestjs/passport';
 import { Category } from 'src/categories/category.entity';
-import { UserFavoriteDto } from 'src/places/dtos/user-favorite.dto';
+import { UsersFavoriteDto } from 'src/places/dtos/users-favorite.dto';
+import { UserDto } from './dtos/user.dto';
 
 @Controller('users')
 // @Serialize(UserDto)
@@ -36,19 +40,36 @@ export class UsersController {
   @Serialize(UserDto)
   @UseGuards(AuthGuard)
   whoAmI(@currentUser() user: User, @Session() session: any) {
-    // console.log(session);
+    console.log(user);
     return user;
   }
 
   @Post('preferences')
-  async setPreferences(@currentUser() user: User, @Body() categories: Category[]){
+  async setPreferences(
+    @currentUser() user: User,
+    @Body() categories: Category[],
+  ) {
     return await this.usersService.setPreferences(user, categories);
   }
 
-  @Serialize(UserFavoriteDto)
-  @Patch('/favoritePlace/:id')
-  favoritePlace(@currentUser() user: UserFavoriteDto, @Param('id') id: string ){
-    return this.usersService.favoritePlace(user, id);
+  @Get('preferences')
+  async getPreferences(@currentUser() user: User) {
+    return await this.usersService.getPreferences(user);
+    // console.log(user.Categories); 
+  }
+
+  @Serialize(UsersFavoriteDto)
+  @Post('/favoritePlace/:id')
+  async favoritePlace(@currentUser() user: UserDto, @Param('id') id: string) {
+    return this.usersService.favoritePlaces(user, id);
+  }
+
+  @Delete('/favoritePlace/:id')
+  async removeUserFavorite(
+    @currentUser() user: UserDto,
+    @Param('id') id: string,
+  ) {
+    return this.usersService.removeUserFavorite(user, id);
   }
 
   @Get()
@@ -57,19 +78,28 @@ export class UsersController {
     return this.usersService.find(email);
   }
 
+  @Patch('make-admin')
+  async makeAdmin(@currentUser() user: User, @Session() session: any) {
+    return this.usersService.makeAdmin(user, session);
+  }
+
   @Post('/signup')
-  @Serialize(UserDto)
-  async sendUser(@Body() body: UserDto, @Session() session: any) {
+  @Serialize(SignupUserDto)
+  async sendUser(@Body() body: SignupUserDto, @Session() session: any) {
     console.log(body);
-    const user = await this.authService.signup(body.email, body.password);
+    const user = await this.authService.signup(
+      body.email,
+      body.username,
+      body.password,
+    );
     session.userId = user.user_id;
     console.log(session.userId);
     return user;
   }
 
   @Post('/signin')
-  @Serialize(UserDto)
-  async signin(@Body() body: UserDto, @Session() session: any) {
+  @Serialize(SigninUserDto)
+  async signin(@Body() body: SigninUserDto, @Session() session: any) {
     const user = await this.authService.signin(body.email, body.password);
     session.userId = user.user_id;
     console.log(session);

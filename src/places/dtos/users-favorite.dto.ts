@@ -3,21 +3,26 @@ import { IsString, IsNumber } from 'class-validator';
 import { Category } from 'src/categories/category.entity';
 import { Comment } from 'src/comments/comment.entity';
 import { Place } from 'src/places/entities/place.entity';
-import { JoinTable, ManyToMany, OneToMany } from 'typeorm';
+import { User } from 'src/users/user.entity';
+import { JoinTable, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 
-export class UserFavoriteDto {
+export class UsersFavoriteDto {
   @Expose()
   user_id: number;
 
   @Expose()
   email: string;
-  
+
   @IsString()
   password: string;
-  
-  @ManyToMany(() => Place)
-  @JoinTable()
-  places: Place[];
 
+  @ManyToOne(() => User, (user) => user.usersFavorites)
+  user: User;
 
+  @ManyToOne(() => Place, (place) => place.usersFavorites)
+  place: Place;
+
+  // @ManyToMany(() => Place)
+  // @JoinTable()
+  // places: Place[];
 }

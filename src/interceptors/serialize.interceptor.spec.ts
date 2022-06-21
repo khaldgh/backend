@@ -1,4 +1,4 @@
-import { UserDto } from 'src/users/dtos/user.dto';
+import { UserDto } from 'src/users/dtos/signup_user.dto';
 import { SerializeInterceptor } from './serialize.interceptor';
 
 describe('SerializeInterceptor', () => {
