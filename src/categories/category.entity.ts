@@ -12,7 +12,7 @@ export class Category {
     category: string;
 
     @OneToMany(() => Place, (place) => place.category)
-    places: Place[];  
+    places: Place[];
 
 
 

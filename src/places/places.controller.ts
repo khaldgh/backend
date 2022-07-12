@@ -59,8 +59,8 @@ export class PlacesController {
 
   @Get('/places')
   @UseGuards(AuthGuard)
-  getPlaces() {
-    return this.placesService.getPlaces();
+  async getPlaces() {
+    return await this.placesService.getPlaces();
   }
 
   @Get('/queryPlaces')
