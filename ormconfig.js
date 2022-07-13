@@ -10,7 +10,7 @@ switch (process.env.NODE_ENV) {
     case 'development': 
     Object.assign(dbConfig, {
         type: 'mysql',
-        database: 'new_schema2',
+        database: 'new_schema',
         entities: ['**/*.entity.js'],
         username: 'root',
         password: 'Password',
