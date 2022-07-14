@@ -372,18 +372,6 @@ export class PlacesService {
       catsArray.push(parsed);
     }
 
-    // const places = await this.repo
-    //   .createQueryBuilder()
-    //   .select(
-    //     'place_id,title, description,approved,phone,website,instagram,Sunday,monday,tuesday,wednesday,thursday,friday,saturday, category_id, category, email',
-    //   )
-    //   .innerJoin('category', 'c', 'c.category_id = categoryCategoryId')
-    //   .innerJoin('user', 'u', 'u.user_id = creatorIdUserId')
-    //   .where('approved = 1')
-    //   .andWhere('categoryCategoryId in (:catsArray)', { catsArray })
-    //   .orderBy('place_id', 'ASC')
-    //   .getRawMany();
-
       const places = await this.repo
       .createQueryBuilder()
       .select(
@@ -395,18 +383,14 @@ export class PlacesService {
       .orderBy('place_id', 'ASC')
       .getRawMany();
 
-      console.log(places, 'HIIIIIIIIIIII---------')
-
       const categoriesQuery = await this.repo
       .createQueryBuilder()
       .select(
         'category_id, category',
       )
       .innerJoin('category', 'c', 'c.category_id = categoryCategoryId')
-      // .where('categoryCategoryId in (:catsArray)', { catsArray })
       .getRawMany();
 
-      console.log(categoriesQuery)
 
     const neighborhoods = await this.repo
       .createQueryBuilder()
