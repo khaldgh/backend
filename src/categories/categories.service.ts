@@ -14,7 +14,7 @@ export class CategoriesService {
 
   getCategories() {
     return this.repo.createQueryBuilder().select('*')
-    .where('category_id NOT IN (7, 13, 14)')
+    .where('category_id NOT IN (75, 135, 145)')
       .getRawMany();
   }
 
