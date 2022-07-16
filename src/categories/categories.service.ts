@@ -20,7 +20,7 @@ export class CategoriesService {
 
   getBigCategories() {
     return this.repo.createQueryBuilder().select('*')
-    .where('category_id IN (7, 13, 14)')
+    .where('category_id IN (75, 135, 145)')
       .getRawMany();
   }
 
