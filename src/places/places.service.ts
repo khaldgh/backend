@@ -59,6 +59,7 @@ export class PlacesService {
     const places = await this.repo.createQueryBuilder()
     .select('place_id,title, description,approved,phone,website,instagram,Sunday,monday,tuesday,wednesday,thursday,friday,saturday, categoryCategoryId')
     .where('title REGEXP :phrase"."', {phrase})
+    .andWhere('approved = 1')
     .getRawMany();
 
     const categories = await this.repo
