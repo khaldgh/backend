@@ -55,6 +55,62 @@ export class PlacesService {
     this.repo.delete(id);
   }
 
+  async searchPlace(phrase: string){
+    const places = await this.repo.createQueryBuilder()
+    .select('place_id,title, description,approved,phone,website,instagram,Sunday,monday,tuesday,wednesday,thursday,friday,saturday, categoryCategoryId')
+    .where('title REGEXP :phrase"."', {phrase})
+    .getRawMany();
+
+    const categories = await this.repo
+      .createQueryBuilder()
+      .select(
+        'category_id, category',
+      )
+      .innerJoin('category', 'c', 'c.category_id = categoryCategoryId')
+      .getRawMany();
+
+    const neighborhoods = await this.repo
+      .createQueryBuilder()
+      .select(
+        'neighborhood_id, neighborhood, neighborhoodNeighborhoodId, placePlaceId',
+      )
+      .innerJoin(
+        'place_neighborhoods_neighborhood',
+        'pnn',
+        'place_id = pnn.placePlaceId',
+      )
+      .innerJoin(
+        'neighborhood',
+        'n',
+        'n.neighborhood_id = pnn.neighborhoodNeighborhoodId',
+      )
+      .getRawMany();
+
+      places.forEach((place) => {
+        let newCategory: Category = new Category();
+        for (let i = 0; i < categories.length; i++) {
+          place.categoryCategoryId === categories[i].category_id
+            ? newCategory = categories[i]
+            : 0;
+        }
+        place.category = newCategory;
+        place.approved = true
+        this.repo.save(place);
+      });
+
+    places.forEach((place) => {
+      let nList: Neighborhood[] = [];
+      for (let i = 0; i < neighborhoods.length; i++) {
+        place.place_id === neighborhoods[i].placePlaceId
+          ? nList.push(neighborhoods[i])
+          : 0;
+      }
+      place.neighborhoods = nList;
+      this.repo.save(place);
+    });
+    return places;
+  }
+
   async getOnePlace(id: number) {
     const place = await this.repo
       .createQueryBuilder()
@@ -62,7 +118,7 @@ export class PlacesService {
         'place_id,title,description,approved,phone,website,instagram,Sunday,monday,tuesday,wednesday,thursday,friday,saturday, categoryCategoryId, username, email',
       )
       .innerJoin('user', 'u', 'u.user_id = creatorIdUserId')
-      .where(`place_id = ${id}`)
+      .where('place_id = :id', {id})
       .getRawOne();
 
       const category = await this.repo
@@ -71,7 +127,7 @@ export class PlacesService {
         'category_id, category',
       )
       .innerJoin('category', 'c', 'c.category_id = categoryCategoryId')
-      .where(`place_id = ${id}`)
+      .where('place_id = :id', {id})
       .getRawOne();
 
     const neighborhoods = await this.repo
@@ -87,7 +143,7 @@ export class PlacesService {
         'n',
         'n.neighborhood_id = pnn.neighborhoodNeighborhoodId',
       )
-      .where(`place_id = ${id}`)
+      .where('place_id = :id', {id})
       .getRawMany();
 
 
@@ -109,10 +165,10 @@ export class PlacesService {
       )
       .innerJoin('category', 'c', 'c.category_id = categoryCategoryId')
       .innerJoin('user', 'u')
-      .innerJoin('users_Favorites', 'uf', `uf.userUserId = ${userId}`)
+      .innerJoin('users_Favorites', 'uf', `uf.userUserId = userId, ${userId}`)
       .where('place_id = placePlaceId')
       .andWhere('approved = 1')
-      .andWhere(`user_id = ${userId}`)
+      .andWhere('user_id = :userId', {userId})
       .orderBy('creationDate', 'DESC')
       .getRawMany();
 

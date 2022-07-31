@@ -57,6 +57,11 @@ export class PlacesController {
     );
   }
 
+  @Get('/search/:phrase')
+  async searchPlace(@Param('phrase') phrase: string){
+    return this.placesService.searchPlace(phrase);
+  }
+
   @Get('/places')
   @UseGuards(AuthGuard)
   async getPlaces() {
