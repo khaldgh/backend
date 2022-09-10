@@ -25,9 +25,7 @@ export class PlacesService {
   ) {
     const place = this.repo.create(createPlaceDto);
     place.neighborhoods = place.neighborhoods
-    // console.log(category.category_id)
-    // const foundCat = await this.categoryRepo.findOne(category.category_id);
-    // place.category = foundCat;
+    place.subcategories = createPlaceDto.subcategories;
     place.creatorId = user;
     await this.repo.save(place).finally(() => {
       this.plcId = place.place_id;

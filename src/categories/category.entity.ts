@@ -1,3 +1,4 @@
+import { Subcategory } from "src/subcategories/subcategory.entity";
 import { User } from "src/users/user.entity";
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, PrimaryColumn, ManyToMany, JoinTable } from "typeorm"
 import { Place } from "../places/entities/place.entity";
@@ -14,6 +15,7 @@ export class Category {
     @OneToMany(() => Place, (place) => place.category)
     places: Place[];
 
-
+    @OneToMany(() => Subcategory, (subcategory) => subcategory.category)
+    subcategories: Subcategory[];
 
 }

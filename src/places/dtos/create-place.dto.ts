@@ -16,7 +16,8 @@ import {
 import { Category } from 'src/categories/category.entity';
 import { PlaceCateogryDto } from 'src/categories/place-category.dto';
 import { Neighborhood } from 'src/neighborhoods/neighborhood.entity';
-import { SubcategoryDto } from './sub_category.dto';
+import { SubcategoryDto } from 'src/subcategories/subcategory.dto';
+import { Subcategory } from 'src/subcategories/subcategory.entity';
 
 export class CreatePlaceDto {
   @IsString()
@@ -46,13 +47,13 @@ export class CreatePlaceDto {
   @IsString()
   Saturday: string;
 
-  // @Expose()
   @IsObject()
   @Type(() => PlaceCateogryDto)
   category: PlaceCateogryDto
+
+  @IsArray()
+  subcategories: Subcategory[];
   
-  // @Expose()
-  // @Type(() => Neighborhood)
   @IsArray()
   neighborhoods: Neighborhood[]
 }

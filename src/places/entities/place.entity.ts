@@ -1,4 +1,5 @@
 import { Comment } from 'src/comments/comment.entity';
+import { Subcategory } from 'src/subcategories/subcategory.entity';
 import { User } from 'src/users/user.entity';
 import {
   Entity,
@@ -78,7 +79,7 @@ export class Place {
   @OneToMany(() => UsersFavorites, (usersFavorites) => usersFavorites.place)
   usersFavorites: UsersFavorites[];
 
-  // @ManyToMany(() => User)
-  // @JoinTable()
-  // userFavorites: User[];
+  @ManyToMany(() => Subcategory)
+  @JoinTable({ name: 'tags' })
+  subcategories: Subcategory[];
 }

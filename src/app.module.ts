@@ -16,6 +16,9 @@ import { NeighborhoodsService } from './neighborhoods/neighborhoods.service';
 import { NeighborhoodsModule } from './neighborhoods/neighborhoods.module';
 import { CommentsModule } from './comments/comments.module';
 import { UsersFavoritesModule } from './users-favorites/users-favorites.module';
+import { SubcategoriesController } from './subcategories/subcategories.controller';
+import { SubcategoriesService } from './subcategories/subcategories.service';
+import { SubcategoriesModule } from './subcategories/subcategories.module';
 const cookieSession = require('cookie-session');
 
 @Module({
@@ -32,12 +35,10 @@ const cookieSession = require('cookie-session');
     NeighborhoodsModule,
     CommentsModule,
     UsersFavoritesModule,
+    SubcategoriesModule,
   ],
   controllers: [
     AppController,
-    // NeighborhoodsController,
-    // CitiesController,
-    // CategoriesController
   ],
   providers: [
     AppService,
@@ -47,7 +48,6 @@ const cookieSession = require('cookie-session');
         whitelist: true,
       }),
     },
-    // NeighborhoodsService
   ],
 })
 export class AppModule {
