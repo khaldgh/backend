@@ -40,7 +40,4 @@ export class User {
   @OneToMany(() => UsersFavorites, (usersFavorites) => usersFavorites.user)
   usersFavorites: UsersFavorites[];
 
-  // @ManyToMany(() => Place)
-  // @JoinTable({ name: 'usersFavorites' ,  })
-  // places: Place[];
 }
