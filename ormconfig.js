@@ -30,14 +30,23 @@ switch (process.env.NODE_ENV) {
   case 'production':
     Object.assign(dbConfig, {
       type: 'mysql',
-      url: process.env.CLEARDB_DATABASE_URL,
-      logging: true,
-
-      migrationsRun: true,
+      database: 'defaultdb',
       entities: ['**/*.entity.js'],
-      ssl: {
-        rejectUnauthorized: false,
-      },
+      username: 'doadmin',
+      password: 'AVNS_EA_Xy2G_6FSb4gXn_IK ',
+      host: 'db-mysql-blr1-65338-do-user-12746493-0.b.db.ondigitalocean.com',
+      port: 25060,
+      ssl: "REQUIRED",
+      logging: true,
+      // type: 'mysql',
+      // url: process.env.CLEARDB_DATABASE_URL,
+      // logging: true,
+
+      // migrationsRun: true,
+      // entities: ['**/*.entity.js'],
+      // ssl: {
+      //   rejectUnauthorized: false,
+      // },
     });
     break;
   default:
