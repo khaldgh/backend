@@ -1,0 +1,44 @@
+org: khaldgh
+app: wejhat-backend
+service: wejhat-backend
+
+useDotenv: true
+
+plugins:
+  - serverless-offline
+  
+provider:
+  name: aws
+  runtime: nodejs16.x
+  region: me-south-1
+
+  environment:
+
+    
+
+    FCLIENT_ID: ${.env:FCLIENT_ID}
+
+    FCLIENT_SECRET: ${.env:FCLIENT_SECRET}
+
+    GCLIENT_ID: ${.env:GCLIENT_ID}
+
+    GCLIENT_SECRET: ${.env:GCLIENT_SECRET}
+
+    COOKIE_KEY: ${.env:COOKIE_KEY}
+
+    AWS_S3_BUCKET: ${.env:AWS_S3_BUCKET}
+
+    AWS_S3_ACCESS_KEY: ${.env:AWS_S3_ACCESS_KEY}
+
+    AWS_S3_KEY_SECRET: ${.env:AWS_S3_KEY_SECRET}
+
+functions:
+  main:
+    handler: dist/serverless.handler
+    events:
+      - http:
+          method: ANY
+          path: /
+      - http:
+          method: ANY
+          path: '{proxy+}'

@@ -7,26 +7,21 @@ import { APP_PIPE } from '@nestjs/core';
 // import cookieSession from 'cookie-session';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PlacesModule } from './places/places.module';
-import { CategoriesController } from './categories/categories.controller';
 import { CategoriesModule } from './categories/categories.module';
-import { CitiesController } from './cities/cities.controller';
 import { CitiesModule } from './cities/cities.module';
-import { NeighborhoodsController } from './neighborhoods/neighborhoods.controller';
-import { NeighborhoodsService } from './neighborhoods/neighborhoods.service';
 import { NeighborhoodsModule } from './neighborhoods/neighborhoods.module';
 import { CommentsModule } from './comments/comments.module';
 import { UsersFavoritesModule } from './users-favorites/users-favorites.module';
-import { SubcategoriesController } from './subcategories/subcategories.controller';
-import { SubcategoriesService } from './subcategories/subcategories.service';
 import { SubcategoriesModule } from './subcategories/subcategories.module';
 const cookieSession = require('cookie-session');
 
+
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      envFilePath: `.env.${process.env.NODE_ENV}`,
-    }),
+    // ConfigModule.forRoot({
+    //   isGlobal: true,
+    //   envFilePath: `.env.${process.env.NODE_ENV}`,
+    // }),
     TypeOrmModule.forRoot(),
     UsersModule,
     PlacesModule,

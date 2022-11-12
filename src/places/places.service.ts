@@ -9,6 +9,7 @@ import { Category } from 'src/categories/category.entity';
 import { PlaceCateogryDto } from 'src/categories/place-category.dto';
 import { ApprovePlaceDto } from './dtos/approve-place.dto';
 import { DateTime } from 'aws-sdk/clients/devicefarm';
+import { devDataSource } from 'src/dataSources';
 
 @Injectable()
 export class PlacesService {
@@ -34,7 +35,7 @@ export class PlacesService {
   }
 
   async changeApproval(id: string, updatedPlace: ApprovePlaceDto) {
-    var place = await this.repo.findOne(id);
+    var place = await devDataSource.manager.findOneBy(Place, {place_id: parseInt(id)});
     if (!place) {
       throw new NotFoundException('place not found');
     }

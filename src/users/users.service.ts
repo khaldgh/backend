@@ -13,6 +13,7 @@ import { currentUser } from './decorators/current-user.decorator';
 import { Admin } from './admin.entity';
 import { UsersFavorites } from 'src/users-favorites/users_favorites.entity';
 import { UserDto } from './dtos/user.dto';
+import { devDataSource } from 'src/dataSources';
 
 @Injectable()
 export class UsersService {
@@ -28,40 +29,40 @@ export class UsersService {
     if (!id) {
       return null;
     }
-    return this.repo.findOne(id);
+    return await devDataSource.manager.findOneBy(User, {user_id: id});
   }
 
   async find(email: string) {
-    console.log(await this.repo.find({ email }));
-    const user = await this.repo.find({ email });
+    console.log(await devDataSource.manager.find(User, {select: { email: true}}));
+    const user = await devDataSource.manager.find(User, {select: { email: true}});
     return user;
   }
 
   async create(body: SignupUserDto) {
-    const user = this.repo.create(body);
+    const user = devDataSource.manager.create(User, body);
     //    console.log(user);
-    const savedUser = await this.repo.save(user);
+    const savedUser = await devDataSource.manager.save(user);
     //    console.log(savedUser);
     return savedUser;
   }
 
   async signupUser(email: string, username, password: string) {
-    const createUser = this.repo.create({ email, username, password });
+    const createUser = devDataSource.manager.create(User, { email, username, password });
 
-    const user = await this.repo.save(createUser);
+    const user = await devDataSource.manager.save(createUser);
 
     return user;
   }
 
   async setPreferences(user: User, categories: Category[]) {
     user.Categories = categories;
-    await this.repo.save(user);
+    await devDataSource.manager.save(user);
     return user;
   }
 
   async getPreferences(user: User) {
     const userId = user.user_id;
-    const preferences = await this.repo
+    const preferences = await devDataSource.manager
       .createQueryBuilder()
       .select('category_id, category')
       .innerJoin('preferences', 'p', 'p.userUserId = user_id')
@@ -78,9 +79,9 @@ export class UsersService {
   async favoritePlaces(user: UserDto, id: string) {
     const usersFavorite = this.FavoritesRepo.create();
 
-    const place = await this.placesRepo.findOne(id);
+    const place = await devDataSource.manager.findOneBy(Place, {place_id: parseInt(id) });
 
-    const usersFavorites = await this.FavoritesRepo.find();
+    const usersFavorites = await devDataSource.manager.find(UsersFavorites);
 
     const filteredObject = usersFavorites.find((object) => {
       return (
@@ -95,15 +96,15 @@ export class UsersService {
       usersFavorite.userId = user.user_id;
       this.FavoritesRepo.save(usersFavorite);
     } else if (filteredObject) {
-      const foundUF = await this.FavoritesRepo.findOne(
-        filteredObject.usersFavoriteId,
+      const foundUF = await devDataSource.manager.findOneBy(
+        UsersFavorites, {usersFavoriteId: filteredObject.usersFavoriteId}
       );
       foundUF.place = place;
       foundUF.user = user;
       this.FavoritesRepo.save(foundUF);
     }
 
-    return this.repo.save(user);
+    return devDataSource.manager.save(user);
   }
 
   async removeUserFavorite(user: UserDto, id: string) {
@@ -119,7 +120,7 @@ export class UsersService {
   }
 
   async makeAdmin(user: User, session: any) {
-    const foundUser = await this.repo.findOne(user);
+    const foundUser = await devDataSource.manager.findOne(User, {});
     const adminUser = new Admin();
     adminUser.user = foundUser;
     session.admin = adminUser.user;

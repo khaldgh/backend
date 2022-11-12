@@ -20,9 +20,9 @@ import { UsersFavorites } from 'src/users-favorites/users_favorites.entity';
   providers: [
     UsersService,
     AuthService,
-    GoogleStrategy,
-    FacebookStrategy,
-    TwitterStrategy,
+    // GoogleStrategy,
+    // FacebookStrategy,
+    // TwitterStrategy,
   ],
   exports: [UsersService]
 })
