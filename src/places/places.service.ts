@@ -9,7 +9,7 @@ import { Category } from 'src/categories/category.entity';
 import { PlaceCateogryDto } from 'src/categories/place-category.dto';
 import { ApprovePlaceDto } from './dtos/approve-place.dto';
 import { DateTime } from 'aws-sdk/clients/devicefarm';
-import { devDataSource } from 'src/dataSources';
+// import { devDataSource } from 'src/dataSources';
 
 @Injectable()
 export class PlacesService {
@@ -35,23 +35,23 @@ export class PlacesService {
   }
 
   async changeApproval(id: string, updatedPlace: ApprovePlaceDto) {
-    var place = await devDataSource.manager.findOneBy(Place, {place_id: parseInt(id)});
-    if (!place) {
-      throw new NotFoundException('place not found');
-    }
+  //   var place = await devDataSource.manager.findOneBy(Place, {place_id: parseInt(id)});
+  //   if (!place) {
+  //     throw new NotFoundException('place not found');
+  //   }
 
-    place.title = updatedPlace.title;
-    place.approved = updatedPlace.approved;
-    place.description = updatedPlace.description;
-    place.phone = updatedPlace.phone;
-    place.website = updatedPlace.website;
-    place.instagram = updatedPlace.instagram;
+  //   place.title = updatedPlace.title;
+  //   place.approved = updatedPlace.approved;
+  //   place.description = updatedPlace.description;
+  //   place.phone = updatedPlace.phone;
+  //   place.website = updatedPlace.website;
+  //   place.instagram = updatedPlace.instagram;
 
-    return this.repo.save(place);
-  }
+  //   return this.repo.save(place);
+  // }
 
-  async deletePlace(id: number) {
-    this.repo.delete(id);
+  // async deletePlace(id: number) {
+  //   this.repo.delete(id);
   }
 
   async searchPlace(phrase: string){

@@ -45,17 +45,17 @@ export class PlacesController {
     return this.placesService.changeApproval(id, body);
   }
 
-  @Delete('/:id')
-  // @UseGuards(AdminGuard)
-  deletePlace(
-    @Param('id') id: number,
-    //  @Body() body: ApprovePlaceDto
-  ) {
-    return this.placesService.deletePlace(
-      id,
-      //  body.approved
-    );
-  }
+  // @Delete('/:id')
+  // // @UseGuards(AdminGuard)
+  // deletePlace(
+  //   @Param('id') id: number,
+  //   //  @Body() body: ApprovePlaceDto
+  // ) {
+  //   return this.placesService.deletePlace(
+  //     id,
+  //     //  body.approved
+  //   );
+  // }
 
   @Get('/search/:phrase')
   async searchPlace(@Param('phrase') phrase: string){
